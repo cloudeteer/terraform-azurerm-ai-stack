@@ -26,7 +26,7 @@ module "example" {
 
 The following providers are used by this module:
 
-- <a name="provider_azapi"></a> [azapi](#provider\_azapi)
+- <a name="provider_azapi"></a> [azapi](#provider\_azapi) (~>2.0)
 
 - <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~>3.0)
 
@@ -46,7 +46,6 @@ The following resources are used by this module:
 - [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
 - [azurerm_storage_account.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) (resource)
 - [random_pet.rg_name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) (resource)
-- [random_string.suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) (resource)
 - [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 
 

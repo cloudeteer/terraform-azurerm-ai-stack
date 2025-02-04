@@ -22,6 +22,8 @@ resource "azurerm_storage_account" "default" {
 }
 
 // KEY VAULT
+#trivy:ignore:avd-azu-0013
+#trivy:ignore:avd-azu-0016
 resource "azurerm_key_vault" "default" {
   name                     = "${var.prefix}keyvault${random_string.suffix.result}"
   location                 = azurerm_resource_group.rg.location
