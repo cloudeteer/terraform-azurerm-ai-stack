@@ -1,0 +1,35 @@
+formatter: markdown document
+
+settings:
+  hide-empty: true
+  lockfile: false
+
+recursive:
+  enabled: true
+  path: modules
+
+output:
+  file: README.md
+
+sort:
+  enabled: true
+  by: name
+
+content: |-
+  ## Usage
+
+  {{ include "examples/usage/main.md" }}
+
+  ```hcl
+  {{ include "examples/usage/main.tf" }}
+  ```
+
+  {{ .Providers }}
+
+  {{ .Modules }}
+
+  {{ .Resources }}
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}
