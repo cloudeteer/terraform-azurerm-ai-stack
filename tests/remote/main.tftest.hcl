@@ -9,16 +9,6 @@ run "setup" {
   }
 }
 
-run "should_apply_lowest_required_version_without_error" {
+run "should_succeed_with_default_variable_values" {
   command = apply
-
-  variables {
-    # access setup output
-    example_variable = run.setup.random_pet
-  }
-
-  assert {
-    condition     = output.example_output == run.setup.random_pet
-    error_message = "Output example_output not equal to expected value"
-  }
 }
