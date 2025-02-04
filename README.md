@@ -25,29 +25,85 @@ module "example" {
 }
 ```
 
+## Providers
+
+The following providers are used by this module:
+
+- <a name="provider_azapi"></a> [azapi](#provider\_azapi)
+
+- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~>3.0)
+
+- <a name="provider_random"></a> [random](#provider\_random) (~>3.0)
 
 
 
+## Resources
+
+The following resources are used by this module:
+
+- [azapi_resource.AIServicesConnection](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azapi_resource.AIServicesResource](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azapi_resource.hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azapi_resource.project](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azurerm_key_vault.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) (resource)
+- [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
+- [azurerm_storage_account.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) (resource)
+- [random_pet.rg_name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) (resource)
+- [random_string.suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) (resource)
+- [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 
 
+## Optional Inputs
 
-## Required Inputs
+The following input variables are optional (have default values):
 
-The following input variables are required:
+### <a name="input_prefix"></a> [prefix](#input\_prefix)
 
-### <a name="input_example_variable"></a> [example\_variable](#input\_example\_variable)
-
-Description: Example variable (between 3 and 13 characters)
+Description: This variable is used to name the hub, project, and dependent resources.
 
 Type: `string`
+
+Default: `"ai"`
+
+### <a name="input_resource_group_location"></a> [resource\_group\_location](#input\_resource\_group\_location)
+
+Description: Location of the resource group.
+
+Type: `string`
+
+Default: `"eastus"`
+
+### <a name="input_resource_group_name_prefix"></a> [resource\_group\_name\_prefix](#input\_resource\_group\_name\_prefix)
+
+Description: Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription.
+
+Type: `string`
+
+Default: `"rg"`
+
+### <a name="input_sku"></a> [sku](#input\_sku)
+
+Description: The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region
+
+Type: `string`
+
+Default: `"S0"`
 
 ## Outputs
 
 The following outputs are exported:
 
-### <a name="output_example_output"></a> [example\_output](#output\_example\_output)
+### <a name="output_endpoint"></a> [endpoint](#output\_endpoint)
 
-Description: Example output
+Description: n/a
+
+### <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name)
+
+Description: n/a
+
+### <a name="output_workspace_name"></a> [workspace\_name](#output\_workspace\_name)
+
+Description: n/a
 <!-- END_TF_DOCS -->
 
 ## Contributions
