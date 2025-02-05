@@ -45,7 +45,7 @@ The following providers are used by this module:
 
 The following resources are used by this module:
 
-- [azapi_resource.AIServicesConnection](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azapi_resource.ai_services_connection](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azapi_resource.hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azapi_resource.project](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azurerm_ai_services.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/ai_services) (resource)
@@ -111,11 +111,11 @@ The following outputs are exported:
 
 ### <a name="output_endpoint"></a> [endpoint](#output\_endpoint)
 
-Description: n/a
+Description: The endpoint used to connect to the AI Services Account.
 
 ### <a name="output_workspace_name"></a> [workspace\_name](#output\_workspace\_name)
 
-Description: n/a
+Description: The ID of the Azure AI project workspace.
 <!-- END_TF_DOCS -->
 
 ## Contributions

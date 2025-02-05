@@ -14,9 +14,11 @@ terraform {
       source  = "azure/azapi"
       version = "2.0.1" # there is no version 2.0.0
     }
+
+    # This provider is required for the remote test execution, not by the module itself
     random = {
       source  = "hashicorp/random"
-      version = "3.1.0"
+      version = "~> 3.1"
     }
   }
 }

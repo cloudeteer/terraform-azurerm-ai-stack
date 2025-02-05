@@ -2,7 +2,7 @@ locals {
   resource_group_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${var.resource_group_name}"
 }
 
-// STORAGE ACCOUNT
+#trivy:ignore:avd-azu-0011
 resource "azurerm_storage_account" "this" {
   name                            = "st${replace(var.name, "-", "")}"
   location                        = var.location
@@ -12,7 +12,6 @@ resource "azurerm_storage_account" "this" {
   allow_nested_items_to_be_public = false
 }
 
-// KEY VAULT
 #trivy:ignore:avd-azu-0013
 #trivy:ignore:avd-azu-0016
 resource "azurerm_key_vault" "this" {
@@ -37,7 +36,6 @@ resource "azurerm_ai_services" "this" {
   }
 }
 
-// Azure AI Hub
 resource "azapi_resource" "hub" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
   name      = "hub-${var.name}"
@@ -81,7 +79,6 @@ resource "azapi_resource" "hub" {
   }
 }
 
-// Azure AI Project
 resource "azapi_resource" "project" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
   name      = "proj-${var.name}"
@@ -102,8 +99,7 @@ resource "azapi_resource" "project" {
   }
 }
 
-// AzAPI AI Services Connection
-resource "azapi_resource" "AIServicesConnection" {
+resource "azapi_resource" "ai_services_connection" {
   type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-04-01-preview"
   name      = "aisc-${var.name}"
   parent_id = azapi_resource.hub.id
@@ -124,7 +120,6 @@ resource "azapi_resource" "AIServicesConnection" {
 }
 
 /* The following resources are OPTIONAL.
-// APPLICATION INSIGHTS
 resource "azurerm_application_insights" "this" {
   name                = "appi-${var.name}"
   location            = var.location
@@ -132,7 +127,6 @@ resource "azurerm_application_insights" "this" {
   application_type    = "web"
 }
 
-// CONTAINER REGISTRY
 resource "azurerm_container_registry" "this" {
   name                     = "cr-${var.name}"
   resource_group_name      = var.resource_group_name

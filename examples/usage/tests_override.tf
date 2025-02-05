@@ -5,7 +5,6 @@ terraform {
     # add all providers used in the module to run tests
     azurerm = { source = "hashicorp/azurerm" }
     azapi   = { source = "azure/azapi" }
-    random  = { source = "hashicorp/random" }
   }
 }
 
