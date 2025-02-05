@@ -3,7 +3,7 @@ output "endpoint" {
 }
 
 output "resource_group_name" {
-  value = azurerm_resource_group.rg.id
+  value = azurerm_resource_group.this.id
 }
 
 output "workspace_name" {

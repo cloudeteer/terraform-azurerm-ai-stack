@@ -9,7 +9,7 @@ resource "random_string" "suffix" {
 }
 
 // RESOURCE GROUP
-resource "azurerm_resource_group" "rg" {
+resource "azurerm_resource_group" "this" {
   location = var.resource_group_location
   name     = random_pet.rg_name.id
 }
@@ -18,10 +18,10 @@ data "azurerm_client_config" "current" {
 }
 
 // STORAGE ACCOUNT
-resource "azurerm_storage_account" "default" {
+resource "azurerm_storage_account" "this" {
   name                            = "${var.prefix}storage${random_string.suffix.result}"
-  location                        = azurerm_resource_group.rg.location
-  resource_group_name             = azurerm_resource_group.rg.name
+  location                        = azurerm_resource_group.this.location
+  resource_group_name             = azurerm_resource_group.this.name
   account_tier                    = "Standard"
   account_replication_type        = "GRS"
   allow_nested_items_to_be_public = false
@@ -30,10 +30,10 @@ resource "azurerm_storage_account" "default" {
 // KEY VAULT
 #trivy:ignore:avd-azu-0013
 #trivy:ignore:avd-azu-0016
-resource "azurerm_key_vault" "default" {
+resource "azurerm_key_vault" "this" {
   name                     = "${var.prefix}keyvault${random_string.suffix.result}"
-  location                 = azurerm_resource_group.rg.location
-  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.this.location
+  resource_group_name      = azurerm_resource_group.this.name
   tenant_id                = data.azurerm_client_config.current.tenant_id
   sku_name                 = "standard"
   purge_protection_enabled = false
@@ -43,8 +43,8 @@ resource "azurerm_key_vault" "default" {
 resource "azapi_resource" "AIServicesResource" {
   type      = "Microsoft.CognitiveServices/accounts@2023-10-01-preview"
   name      = "AIServicesResource${random_string.suffix.result}"
-  location  = azurerm_resource_group.rg.location
-  parent_id = azurerm_resource_group.rg.id
+  location  = azurerm_resource_group.this.location
+  parent_id = azurerm_resource_group.this.id
 
   identity {
     type = "SystemAssigned"
@@ -72,8 +72,8 @@ resource "azapi_resource" "AIServicesResource" {
 resource "azapi_resource" "hub" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
   name      = "${random_pet.rg_name.id}-aih"
-  location  = azurerm_resource_group.rg.location
-  parent_id = azurerm_resource_group.rg.id
+  location  = azurerm_resource_group.this.location
+  parent_id = azurerm_resource_group.this.id
 
   identity {
     type = "SystemAssigned"
@@ -83,19 +83,19 @@ resource "azapi_resource" "hub" {
     properties = {
       description    = "This is my Azure AI hub"
       friendlyName   = "My Hub"
-      storageAccount = azurerm_storage_account.default.id
-      keyVault       = azurerm_key_vault.default.id
+      storageAccount = azurerm_storage_account.this.id
+      keyVault       = azurerm_key_vault.this.id
 
       /* Optional: To enable these field, the corresponding dependent resources need to be uncommented.
-      applicationInsight = azurerm_application_insights.default.id
-      containerRegistry = azurerm_container_registry.default.id
+      applicationInsight = azurerm_application_insights.this.id
+      containerRegistry = azurerm_container_registry.this.id
       */
 
       /*Optional: To enable Customer Managed Keys, the corresponding
       encryption = {
         status = var.encryption_status
         keyVaultProperties = {
-            keyVaultArmId = azurerm_key_vault.default.id
+            keyVaultArmId = azurerm_key_vault.this.id
             keyIdentifier = var.cmk_keyvault_key_uri
         }
       }
@@ -110,8 +110,8 @@ resource "azapi_resource" "hub" {
 resource "azapi_resource" "project" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
   name      = "my-ai-project${random_string.suffix.result}"
-  location  = azurerm_resource_group.rg.location
-  parent_id = azurerm_resource_group.rg.id
+  location  = azurerm_resource_group.this.location
+  parent_id = azurerm_resource_group.this.id
 
   identity {
     type = "SystemAssigned"
@@ -150,18 +150,18 @@ resource "azapi_resource" "AIServicesConnection" {
 
 /* The following resources are OPTIONAL.
 // APPLICATION INSIGHTS
-resource "azurerm_application_insights" "default" {
+resource "azurerm_application_insights" "this" {
   name                = "${var.prefix}appinsights${random_string.suffix.result}"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
   application_type    = "web"
 }
 
 // CONTAINER REGISTRY
-resource "azurerm_container_registry" "default" {
+resource "azurerm_container_registry" "this" {
   name                     = "${var.prefix}contreg${random_string.suffix.result}"
-  resource_group_name      = azurerm_resource_group.rg.name
-  location                 = azurerm_resource_group.rg.location
+  resource_group_name      = azurerm_resource_group.this.name
+  location                 = azurerm_resource_group.this.location
   sku                      = "premium"
   admin_enabled            = true
 }
