@@ -99,7 +99,7 @@ resource "azapi_resource" "hub" {
       */
 
     }
-    kind = "hub"
+    kind = "Hub"
   }
 }
 
@@ -120,7 +120,7 @@ resource "azapi_resource" "project" {
       friendlyName  = "My Project"
       hubResourceId = azapi_resource.hub.id
     }
-    kind = "project"
+    kind = "Project"
   }
 }
 
