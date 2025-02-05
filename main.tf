@@ -14,9 +14,6 @@ resource "azurerm_resource_group" "this" {
   name     = random_pet.rg_name.id
 }
 
-data "azurerm_client_config" "current" {
-}
-
 // STORAGE ACCOUNT
 resource "azurerm_storage_account" "this" {
   name                            = "${var.prefix}storage${random_string.suffix.result}"
