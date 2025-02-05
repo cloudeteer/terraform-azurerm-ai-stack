@@ -14,11 +14,13 @@ repos:
     rev: "v1.96.1"
     hooks:
       - id: terraform_fmt
+
       - id: terraform_tflint
         exclude: ^(examples|tests)/
         args:
           - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
           - --hook-config=--delegate-chdir
+
       - id: terraform_tflint
         alias: terraform_tflint_examples
         name: Terraform validate examples with tflint
