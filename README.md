@@ -30,8 +30,6 @@ The following providers are used by this module:
 
 - <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (>= 4.1)
 
-- <a name="provider_random"></a> [random](#provider\_random) (~>3.0)
-
 
 
 ## Resources
@@ -43,40 +41,37 @@ The following resources are used by this module:
 - [azapi_resource.project](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azurerm_ai_services.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/ai_services) (resource)
 - [azurerm_key_vault.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) (resource)
-- [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
 - [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) (resource)
-- [random_pet.rg_name](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/pet) (resource)
-- [random_string.suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) (resource)
 - [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
+- [azurerm_resource_group.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group) (data source)
 
+## Required Inputs
+
+The following input variables are required:
+
+### <a name="input_name"></a> [name](#input\_name)
+
+Description: The name of the this resource.
+
+Type: `string`
+
+### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
+
+Description: The resource group where the resources will be deployed.
+
+Type: `string`
 
 ## Optional Inputs
 
 The following input variables are optional (have default values):
 
-### <a name="input_prefix"></a> [prefix](#input\_prefix)
-
-Description: This variable is used to name the hub, project, and dependent resources.
-
-Type: `string`
-
-Default: `"ai"`
-
-### <a name="input_resource_group_location"></a> [resource\_group\_location](#input\_resource\_group\_location)
+### <a name="input_location"></a> [location](#input\_location)
 
 Description: Location of the resource group.
 
 Type: `string`
 
 Default: `"eastus"`
-
-### <a name="input_resource_group_name_prefix"></a> [resource\_group\_name\_prefix](#input\_resource\_group\_name\_prefix)
-
-Description: Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription.
-
-Type: `string`
-
-Default: `"rg"`
 
 ### <a name="input_sku"></a> [sku](#input\_sku)
 
@@ -86,15 +81,27 @@ Type: `string`
 
 Default: `"S0"`
 
+### <a name="input_workspace_description"></a> [workspace\_description](#input\_workspace\_description)
+
+Description: The description of this workspace.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_workspace_friendly_name"></a> [workspace\_friendly\_name](#input\_workspace\_friendly\_name)
+
+Description: The friendly name for this workspace. This value in mutable.
+
+Type: `string`
+
+Default: `""`
+
 ## Outputs
 
 The following outputs are exported:
 
 ### <a name="output_endpoint"></a> [endpoint](#output\_endpoint)
-
-Description: n/a
-
-### <a name="output_resource_group_name"></a> [resource\_group\_name](#output\_resource\_group\_name)
 
 Description: n/a
 

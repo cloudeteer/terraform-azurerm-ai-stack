@@ -1,38 +1,44 @@
-/*Optional: To enable Customer Managed Keys, see main.tf
-variable "cmk_keyvault_key_uri" {
-  type        = string
-  description = "Key vault uri to access the encryption key."
-}
-*/
+# variable "cmk_keyvault_key_uri" {
+#   type        = string
+#   description = "Key vault uri to access the encryption key."
+# }
 
-/*Optional: To enable Customer Managed Keys, see main.tf
-variable "encryption_status" {
-  type        = string
-  description = "Indicates whether or not the encryption is enabled for the workspace."
-  default     = "Enabled"
-}
-*/
+# variable "encryption_status" {
+#   type        = string
+#   description = "Indicates whether or not the encryption is enabled for the workspace."
+#   default     = "Enabled"
+# }
 
-variable "prefix" {
-  type        = string
-  description = "This variable is used to name the hub, project, and dependent resources."
-  default     = "ai"
-}
-
-variable "resource_group_location" {
+variable "location" {
   type        = string
   default     = "eastus"
   description = "Location of the resource group."
 }
 
-variable "resource_group_name_prefix" {
+variable "name" {
   type        = string
-  default     = "rg"
-  description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
+  description = "The name of the this resource."
+}
+
+variable "resource_group_name" {
+  type        = string
+  description = "The resource group where the resources will be deployed."
 }
 
 variable "sku" {
   type        = string
   description = "The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region"
   default     = "S0"
+}
+
+variable "workspace_description" {
+  type        = string
+  description = "The description of this workspace."
+  default     = ""
+}
+
+variable "workspace_friendly_name" {
+  type        = string
+  description = "The friendly name for this workspace. This value in mutable."
+  default     = ""
 }

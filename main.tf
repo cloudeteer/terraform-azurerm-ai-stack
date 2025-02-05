@@ -1,24 +1,8 @@
-resource "random_pet" "rg_name" {
-  prefix = var.resource_group_name_prefix
-}
-
-resource "random_string" "suffix" {
-  length  = 4
-  special = false
-  upper   = false
-}
-
-// RESOURCE GROUP
-resource "azurerm_resource_group" "this" {
-  location = var.resource_group_location
-  name     = random_pet.rg_name.id
-}
-
 // STORAGE ACCOUNT
 resource "azurerm_storage_account" "this" {
-  name                            = "${var.prefix}storage${random_string.suffix.result}"
-  location                        = azurerm_resource_group.this.location
-  resource_group_name             = azurerm_resource_group.this.name
+  name                            = "st${replace(var.name, "-", "")}"
+  location                        = var.location
+  resource_group_name             = var.resource_group_name
   account_tier                    = "Standard"
   account_replication_type        = "GRS"
   allow_nested_items_to_be_public = false
@@ -28,21 +12,21 @@ resource "azurerm_storage_account" "this" {
 #trivy:ignore:avd-azu-0013
 #trivy:ignore:avd-azu-0016
 resource "azurerm_key_vault" "this" {
-  name                     = "${var.prefix}keyvault${random_string.suffix.result}"
-  location                 = azurerm_resource_group.this.location
-  resource_group_name      = azurerm_resource_group.this.name
+  name                     = "kv${replace(var.name, "-", "")}"
+  location                 = var.location
+  resource_group_name      = var.resource_group_name
   tenant_id                = data.azurerm_client_config.current.tenant_id
   sku_name                 = "standard"
   purge_protection_enabled = false
 }
 
 resource "azurerm_ai_services" "this" {
-  name                = "AIServicesResource${random_string.suffix.result}"
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
+  name                = "ais-${var.name}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
   sku_name              = var.sku
-  custom_subdomain_name = "${random_string.suffix.result}domain"
+  custom_subdomain_name = var.name
 
   identity {
     type = "SystemAssigned"
@@ -52,9 +36,9 @@ resource "azurerm_ai_services" "this" {
 // Azure AI Hub
 resource "azapi_resource" "hub" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
-  name      = "${random_pet.rg_name.id}-aih"
-  location  = azurerm_resource_group.this.location
-  parent_id = azurerm_resource_group.this.id
+  name      = "hub-${var.name}"
+  location  = var.location
+  parent_id = data.azurerm_resource_group.current.id
 
   identity {
     type = "SystemAssigned"
@@ -62,8 +46,8 @@ resource "azapi_resource" "hub" {
 
   body = {
     properties = {
-      description    = "This is my Azure AI hub"
-      friendlyName   = "My Hub"
+      description    = var.workspace_description
+      friendlyName   = coalesce(var.workspace_friendly_name, "AI Hub")
       storageAccount = azurerm_storage_account.this.id
       keyVault       = azurerm_key_vault.this.id
 
@@ -96,9 +80,9 @@ resource "azapi_resource" "hub" {
 // Azure AI Project
 resource "azapi_resource" "project" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
-  name      = "my-ai-project${random_string.suffix.result}"
-  location  = azurerm_resource_group.this.location
-  parent_id = azurerm_resource_group.this.id
+  name      = "proj-${var.name}"
+  location  = var.location
+  parent_id = data.azurerm_resource_group.current.id
 
   identity {
     type = "SystemAssigned"
@@ -106,8 +90,8 @@ resource "azapi_resource" "project" {
 
   body = {
     properties = {
-      description   = "This is my Azure AI PROJECT"
-      friendlyName  = "My Project"
+      description   = var.workspace_description
+      friendlyName  = coalesce(var.workspace_friendly_name, "AI Project")
       hubResourceId = azapi_resource.hub.id
     }
     kind = "Project"
@@ -117,7 +101,7 @@ resource "azapi_resource" "project" {
 // AzAPI AI Services Connection
 resource "azapi_resource" "AIServicesConnection" {
   type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-04-01-preview"
-  name      = "Default_AIServices${random_string.suffix.result}"
+  name      = "aisc-${var.name}"
   parent_id = azapi_resource.hub.id
 
   body = {
@@ -138,17 +122,17 @@ resource "azapi_resource" "AIServicesConnection" {
 /* The following resources are OPTIONAL.
 // APPLICATION INSIGHTS
 resource "azurerm_application_insights" "this" {
-  name                = "${var.prefix}appinsights${random_string.suffix.result}"
-  location            = azurerm_resource_group.this.location
-  resource_group_name = azurerm_resource_group.this.name
+  name                = "appi-${var.name}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
   application_type    = "web"
 }
 
 // CONTAINER REGISTRY
 resource "azurerm_container_registry" "this" {
-  name                     = "${var.prefix}contreg${random_string.suffix.result}"
-  resource_group_name      = azurerm_resource_group.this.name
-  location                 = azurerm_resource_group.this.location
+  name                     = "cr-${var.name}"
+  resource_group_name      = var.resource_group_name
+  location                 = var.location
   sku                      = "premium"
   admin_enabled            = true
 }
