@@ -1,3 +1,7 @@
+locals {
+  resource_group_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${var.resource_group_name}"
+}
+
 // STORAGE ACCOUNT
 resource "azurerm_storage_account" "this" {
   name                            = "st${replace(var.name, "-", "")}"
@@ -38,7 +42,7 @@ resource "azapi_resource" "hub" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
   name      = "hub-${var.name}"
   location  = var.location
-  parent_id = data.azurerm_resource_group.current.id
+  parent_id = local.resource_group_id
 
   identity {
     type = "SystemAssigned"
@@ -82,7 +86,7 @@ resource "azapi_resource" "project" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
   name      = "proj-${var.name}"
   location  = var.location
-  parent_id = data.azurerm_resource_group.current.id
+  parent_id = local.resource_group_id
 
   identity {
     type = "SystemAssigned"
