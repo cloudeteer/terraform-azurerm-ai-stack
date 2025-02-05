@@ -85,6 +85,12 @@ resource "azapi_resource" "hub" {
     }
     kind = "Hub"
   }
+
+  lifecycle {
+    ignore_changes = [
+      tags # tags are occasionally added by Azure
+    ]
+  }
 }
 
 // Azure AI Project
