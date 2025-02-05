@@ -36,33 +36,17 @@ resource "azurerm_key_vault" "this" {
   purge_protection_enabled = false
 }
 
-// AzAPI AIServices
-resource "azapi_resource" "AIServicesResource" {
-  type      = "Microsoft.CognitiveServices/accounts@2023-10-01-preview"
-  name      = "AIServicesResource${random_string.suffix.result}"
-  location  = azurerm_resource_group.this.location
-  parent_id = azurerm_resource_group.this.id
+resource "azurerm_ai_services" "this" {
+  name                = "AIServicesResource${random_string.suffix.result}"
+  location            = azurerm_resource_group.this.location
+  resource_group_name = azurerm_resource_group.this.name
+
+  sku_name              = var.sku
+  custom_subdomain_name = "${random_string.suffix.result}domain"
 
   identity {
     type = "SystemAssigned"
   }
-
-  body = {
-    name = "AIServicesResource${random_string.suffix.result}"
-    properties = {
-      //restore = true
-      customSubDomainName = "${random_string.suffix.result}domain"
-      apiProperties = {
-        statisticsEnabled = false
-      }
-    }
-    kind = "AIServices"
-    sku = {
-      name = var.sku
-    }
-  }
-
-  response_export_values = ["*"]
 }
 
 // Azure AI Hub
@@ -133,12 +117,12 @@ resource "azapi_resource" "AIServicesConnection" {
   body = {
     properties = {
       category      = "AIServices",
-      target        = azapi_resource.AIServicesResource.output.properties.endpoint,
+      target        = azurerm_ai_services.this.endpoint,
       authType      = "AAD",
       isSharedToAll = true,
       metadata = {
         ApiType    = "Azure",
-        ResourceId = azapi_resource.AIServicesResource.id
+        ResourceId = azurerm_ai_services.this.id
       }
     }
   }

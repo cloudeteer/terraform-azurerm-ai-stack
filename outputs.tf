@@ -1,5 +1,5 @@
 output "endpoint" {
-  value = azapi_resource.AIServicesResource.output.properties.endpoint
+  value = azurerm_ai_services.this.endpoint
 }
 
 output "resource_group_name" {
