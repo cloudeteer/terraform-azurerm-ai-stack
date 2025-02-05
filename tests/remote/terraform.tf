@@ -8,7 +8,7 @@ terraform {
     # based on the version constraints use the lowest version of the provider that is compatible
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "3.0.0"
+      version = "4.1.0"
     }
     azapi = {
       source  = "azure/azapi"
