@@ -15,6 +15,20 @@ variable "location" {
   description = "Location of the resource group."
 }
 
+variable "models" {
+  type = list(object({
+    name         = string
+    format       = optional(string)
+    sku_capacity = optional(number)
+    sku_name     = optional(string)
+    version      = optional(string)
+  }))
+
+  # TODO: Add a description that is more specific to the models variable.
+  description = "A map of models to deploy to the workspace."
+  default     = []
+}
+
 variable "name" {
   type        = string
   description = "The name of the this resource."

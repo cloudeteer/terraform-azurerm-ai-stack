@@ -50,7 +50,7 @@ The following resources are used by this module:
 - [azapi_resource.hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azapi_resource.project](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azurerm_ai_services.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/ai_services) (resource)
-- [azurerm_cognitive_deployment.gpt_4o_mini](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cognitive_deployment) (resource)
+- [azurerm_cognitive_deployment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cognitive_deployment) (resource)
 - [azurerm_key_vault.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) (resource)
 - [azurerm_search_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service) (resource)
 - [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) (resource)
@@ -83,6 +83,24 @@ Description: Location of the resource group.
 Type: `string`
 
 Default: `"eastus"`
+
+### <a name="input_models"></a> [models](#input\_models)
+
+Description: A map of models to deploy to the workspace.
+
+Type:
+
+```hcl
+list(object({
+    name         = string
+    format       = optional(string)
+    sku_capacity = optional(number)
+    sku_name     = optional(string)
+    version      = optional(string)
+  }))
+```
+
+Default: `[]`
 
 ### <a name="input_sku"></a> [sku](#input\_sku)
 
