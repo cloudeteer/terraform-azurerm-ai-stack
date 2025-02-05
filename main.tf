@@ -135,12 +135,3 @@ resource "azurerm_container_registry" "this" {
   admin_enabled            = true
 }
 */
-
-resource "azurerm_search_service" "this" {
-  name                = "srch-${var.name}"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-
-  local_authentication_enabled = false
-  sku                          = "standard"
-}
