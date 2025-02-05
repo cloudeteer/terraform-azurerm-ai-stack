@@ -50,7 +50,7 @@ resource "azapi_resource" "AIServicesResource" {
     type = "SystemAssigned"
   }
 
-  body = jsonencode({
+  body = {
     name = "AIServicesResource${random_string.suffix.result}"
     properties = {
       //restore = true
@@ -63,7 +63,7 @@ resource "azapi_resource" "AIServicesResource" {
     sku = {
       name = var.sku
     }
-  })
+  }
 
   response_export_values = ["*"]
 }
@@ -79,7 +79,7 @@ resource "azapi_resource" "hub" {
     type = "SystemAssigned"
   }
 
-  body = jsonencode({
+  body = {
     properties = {
       description    = "This is my Azure AI hub"
       friendlyName   = "My Hub"
@@ -103,7 +103,7 @@ resource "azapi_resource" "hub" {
 
     }
     kind = "hub"
-  })
+  }
 }
 
 // Azure AI Project
@@ -117,14 +117,14 @@ resource "azapi_resource" "project" {
     type = "SystemAssigned"
   }
 
-  body = jsonencode({
+  body = {
     properties = {
       description   = "This is my Azure AI PROJECT"
       friendlyName  = "My Project"
       hubResourceId = azapi_resource.hub.id
     }
     kind = "project"
-  })
+  }
 }
 
 // AzAPI AI Services Connection
@@ -133,10 +133,10 @@ resource "azapi_resource" "AIServicesConnection" {
   name      = "Default_AIServices${random_string.suffix.result}"
   parent_id = azapi_resource.hub.id
 
-  body = jsonencode({
+  body = {
     properties = {
       category      = "AIServices",
-      target        = jsondecode(azapi_resource.AIServicesResource.output).properties.endpoint,
+      target        = azapi_resource.AIServicesResource.output.properties.endpoint,
       authType      = "AAD",
       isSharedToAll = true,
       metadata = {
@@ -144,7 +144,7 @@ resource "azapi_resource" "AIServicesConnection" {
         ResourceId = azapi_resource.AIServicesResource.id
       }
     }
-  })
+  }
   response_export_values = ["*"]
 }
 

@@ -1,5 +1,5 @@
 output "endpoint" {
-  value = jsondecode(azapi_resource.AIServicesResource.output).properties.endpoint
+  value = azapi_resource.AIServicesResource.output.properties.endpoint
 }
 
 output "resource_group_name" {
