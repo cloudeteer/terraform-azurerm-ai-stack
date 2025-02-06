@@ -19,7 +19,8 @@ resource "azapi_resource" "hub" {
       publicNetworkAccess      = "Enabled" # TODO: should be disabled
 
       managedNetwork = {
-        isolationMode = "AllowInternetOutbound"
+        # ** NOTE ** If you use any other option here, you have to create the private endpoints (on outboundRules below) to private storage account and key vault by yourself. Using AllowOnlyApprovedOutbound creates those private endpoints as required outbound rule in the managed virtual network automatically.
+        isolationMode = "AllowOnlyApprovedOutbound"
         outboundRules = {
           /*search = {
             type = "PrivateEndpoint"

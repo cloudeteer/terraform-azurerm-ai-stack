@@ -1,12 +1,29 @@
-#trivy:ignore:avd-azu-0013
-#trivy:ignore:avd-azu-0016
+locals {
+  key_vault_name = format(
+    "kv%s%s",
+    lower(
+      substr(
+        replace(var.name, "-", ""), 0, 24 - 2 - local.random_string_length
+      )
+    ),
+    random_string.suffix.result
+  )
+}
+
+#trivy:ignore:avd-azu-0016 // [AVD-AZU-0016] azure: Key vault should have purge protection enabled
 resource "azurerm_key_vault" "this" {
-  name                = "kv${replace(var.name, "-", "")}"
+  name                = local.key_vault_name
   location            = var.location
   resource_group_name = var.resource_group_name
 
   tenant_id = data.azurerm_client_config.current.tenant_id
+  sku_name  = "standard"
 
-  purge_protection_enabled = false
-  sku_name                 = "standard"
+  purge_protection_enabled      = false # TODO: enable on production
+  public_network_access_enabled = false
+
+  network_acls {
+    default_action = "Deny"
+    bypass         = "AzureServices"
+  }
 }
