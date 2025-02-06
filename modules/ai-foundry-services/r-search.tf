@@ -8,7 +8,7 @@ resource "azurerm_search_service" "this" {
 }
 
 resource "azapi_resource" "ai_services_connection_search_service" {
-  type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-04-01-preview"
+  type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-10-01-preview"
   name      = azurerm_search_service.this.name
   parent_id = var.hub_id
 

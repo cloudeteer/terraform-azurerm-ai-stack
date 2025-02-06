@@ -12,7 +12,7 @@ resource "azurerm_ai_services" "this" {
 }
 
 resource "azapi_resource" "ai_services_connection" {
-  type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-04-01-preview"
+  type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-10-01-preview"
   name      = "aisc-${var.name}"
   parent_id = var.hub_id
 

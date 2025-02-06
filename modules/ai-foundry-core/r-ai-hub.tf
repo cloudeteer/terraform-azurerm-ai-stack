@@ -1,5 +1,5 @@
 resource "azapi_resource" "hub" {
-  type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
+  type      = "Microsoft.MachineLearningServices/workspaces@2024-10-01-preview"
   name      = "hub-${var.name}"
   location  = var.location
   parent_id = var.resource_group_id
