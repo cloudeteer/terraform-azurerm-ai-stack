@@ -2,27 +2,6 @@ locals {
   resource_group_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${var.resource_group_name}"
 }
 
-#trivy:ignore:avd-azu-0011
-resource "azurerm_storage_account" "this" {
-  name                            = "st${replace(var.name, "-", "")}"
-  location                        = var.location
-  resource_group_name             = var.resource_group_name
-  account_tier                    = "Standard"
-  account_replication_type        = "GRS"
-  allow_nested_items_to_be_public = false
-}
-
-#trivy:ignore:avd-azu-0013
-#trivy:ignore:avd-azu-0016
-resource "azurerm_key_vault" "this" {
-  name                     = "kv${replace(var.name, "-", "")}"
-  location                 = var.location
-  resource_group_name      = var.resource_group_name
-  tenant_id                = data.azurerm_client_config.current.tenant_id
-  sku_name                 = "standard"
-  purge_protection_enabled = false
-}
-
 resource "azurerm_ai_services" "this" {
   name                = "ais-${var.name}"
   location            = var.location
@@ -36,73 +15,43 @@ resource "azurerm_ai_services" "this" {
   }
 }
 
-resource "azapi_resource" "hub" {
-  type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
-  name      = "hub-${var.name}"
-  location  = var.location
-  parent_id = local.resource_group_id
+module "ai_foundry_core" {
+  source = "./modules/ai-foundry-core"
 
-  identity {
-    type = "SystemAssigned"
-  }
+  name                = var.name
+  location            = var.location
+  resource_group_id   = local.resource_group_id
+  resource_group_name = var.resource_group_name
 
-  body = {
-    properties = {
-      description    = var.workspace_description
-      friendlyName   = coalesce(var.workspace_friendly_name, "AI Hub")
-      storageAccount = azurerm_storage_account.this.id
-      keyVault       = azurerm_key_vault.this.id
-
-      /* Optional: To enable these field, the corresponding dependent resources need to be uncommented.
-      applicationInsight = azurerm_application_insights.this.id
-      containerRegistry = azurerm_container_registry.this.id
-      */
-
-      /*Optional: To enable Customer Managed Keys, the corresponding
-      encryption = {
-        status = var.encryption_status
-        keyVaultProperties = {
-            keyVaultArmId = azurerm_key_vault.this.id
-            keyIdentifier = var.cmk_keyvault_key_uri
-        }
-      }
-      */
-
-    }
-    kind = "Hub"
-  }
-
-  lifecycle {
-    ignore_changes = [
-      tags # tags are occasionally added by Azure
-    ]
-  }
+  description   = var.description
+  friendly_name = var.friendly_name
 }
 
-resource "azapi_resource" "project" {
-  type      = "Microsoft.MachineLearningServices/workspaces@2024-04-01-preview"
-  name      = "proj-${var.name}"
-  location  = var.location
-  parent_id = local.resource_group_id
-
-  identity {
-    type = "SystemAssigned"
-  }
-
-  body = {
-    properties = {
-      description   = var.workspace_description
-      friendlyName  = coalesce(var.workspace_friendly_name, "AI Project")
-      hubResourceId = azapi_resource.hub.id
-    }
-    kind = "Project"
-  }
+moved {
+  from = azurerm_storage_account.this
+  to   = module.ai_foundry_core.azurerm_storage_account.this
 }
+
+moved {
+  from = azurerm_key_vault.this
+  to   = module.ai_foundry_core.azurerm_key_vault.this
+}
+
+moved {
+  from = azapi_resource.hub
+  to   = module.ai_foundry_core.azapi_resource.hub
+}
+
+moved {
+  from = azapi_resource.project
+  to   = module.ai_foundry_core.azapi_resource.project
+}
+
 
 resource "azapi_resource" "ai_services_connection" {
   type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-04-01-preview"
   name      = "aisc-${var.name}"
-  parent_id = azapi_resource.hub.id
+  parent_id = module.ai_foundry_core.hub_id
 
   body = {
     properties = {

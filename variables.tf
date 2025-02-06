@@ -45,13 +45,13 @@ variable "sku" {
   default     = "S0"
 }
 
-variable "workspace_description" {
+variable "description" {
   type        = string
   description = "The description of this workspace."
   default     = ""
 }
 
-variable "workspace_friendly_name" {
+variable "friendly_name" {
   type        = string
   description = "The friendly name for this workspace. This value in mutable."
   default     = ""

@@ -39,7 +39,15 @@ The following providers are used by this module:
 
 - <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (>= 4.1)
 
+## Modules
 
+The following Modules are called:
+
+### <a name="module_ai_foundry_core"></a> [ai\_foundry\_core](#module\_ai\_foundry\_core)
+
+Source: ./modules/ai-foundry-core
+
+Version:
 
 ## Resources
 
@@ -47,13 +55,9 @@ The following resources are used by this module:
 
 - [azapi_resource.ai_services_connection](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azapi_resource.ai_services_connection_search_service](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
-- [azapi_resource.hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
-- [azapi_resource.project](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azurerm_ai_services.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/ai_services) (resource)
 - [azurerm_cognitive_deployment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cognitive_deployment) (resource)
-- [azurerm_key_vault.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/key_vault) (resource)
 - [azurerm_search_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service) (resource)
-- [azurerm_storage_account.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account) (resource)
 - [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 
 ## Required Inputs
@@ -75,6 +79,22 @@ Type: `string`
 ## Optional Inputs
 
 The following input variables are optional (have default values):
+
+### <a name="input_description"></a> [description](#input\_description)
+
+Description: The description of this workspace.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_friendly_name"></a> [friendly\_name](#input\_friendly\_name)
+
+Description: The friendly name for this workspace. This value in mutable.
+
+Type: `string`
+
+Default: `""`
 
 ### <a name="input_location"></a> [location](#input\_location)
 
@@ -110,22 +130,6 @@ Type: `string`
 
 Default: `"S0"`
 
-### <a name="input_workspace_description"></a> [workspace\_description](#input\_workspace\_description)
-
-Description: The description of this workspace.
-
-Type: `string`
-
-Default: `""`
-
-### <a name="input_workspace_friendly_name"></a> [workspace\_friendly\_name](#input\_workspace\_friendly\_name)
-
-Description: The friendly name for this workspace. This value in mutable.
-
-Type: `string`
-
-Default: `""`
-
 ## Outputs
 
 The following outputs are exported:
@@ -133,10 +137,6 @@ The following outputs are exported:
 ### <a name="output_endpoint"></a> [endpoint](#output\_endpoint)
 
 Description: The endpoint used to connect to the AI Services Account.
-
-### <a name="output_workspace_name"></a> [workspace\_name](#output\_workspace\_name)
-
-Description: The ID of the Azure AI project workspace.
 <!-- END_TF_DOCS -->
 
 ## Contributions

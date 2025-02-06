@@ -10,7 +10,7 @@ resource "azurerm_search_service" "this" {
 resource "azapi_resource" "ai_services_connection_search_service" {
   type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-04-01-preview"
   name      = azurerm_search_service.this.name
-  parent_id = azapi_resource.hub.id
+  parent_id = module.ai_foundry_core.hub_id
 
   body = {
     properties = {
