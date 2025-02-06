@@ -35,8 +35,6 @@ module "example" {
 
 The following providers are used by this module:
 
-- <a name="provider_azapi"></a> [azapi](#provider\_azapi) (~>2.0)
-
 - <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (>= 4.1)
 
 ## Modules
@@ -49,15 +47,16 @@ Source: ./modules/ai-foundry-core
 
 Version:
 
+### <a name="module_ai_foundry_services"></a> [ai\_foundry\_services](#module\_ai\_foundry\_services)
+
+Source: ./modules/ai-foundry-services
+
+Version:
+
 ## Resources
 
 The following resources are used by this module:
 
-- [azapi_resource.ai_services_connection](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
-- [azapi_resource.ai_services_connection_search_service](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
-- [azurerm_ai_services.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/ai_services) (resource)
-- [azurerm_cognitive_deployment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cognitive_deployment) (resource)
-- [azurerm_search_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service) (resource)
 - [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 
 ## Required Inputs
@@ -130,13 +129,6 @@ Type: `string`
 
 Default: `"S0"`
 
-## Outputs
-
-The following outputs are exported:
-
-### <a name="output_endpoint"></a> [endpoint](#output\_endpoint)
-
-Description: The endpoint used to connect to the AI Services Account.
 <!-- END_TF_DOCS -->
 
 ## Contributions

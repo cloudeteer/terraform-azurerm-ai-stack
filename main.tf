@@ -2,19 +2,6 @@ locals {
   resource_group_id = "/subscriptions/${data.azurerm_client_config.current.subscription_id}/resourceGroups/${var.resource_group_name}"
 }
 
-resource "azurerm_ai_services" "this" {
-  name                = "ais-${var.name}"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-
-  sku_name              = var.sku
-  custom_subdomain_name = var.name
-
-  identity {
-    type = "SystemAssigned"
-  }
-}
-
 module "ai_foundry_core" {
   source = "./modules/ai-foundry-core"
 
@@ -47,26 +34,44 @@ moved {
   to   = module.ai_foundry_core.azapi_resource.project
 }
 
+module "ai_foundry_services" {
+  source = "./modules/ai-foundry-services"
 
-resource "azapi_resource" "ai_services_connection" {
-  type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-04-01-preview"
-  name      = "aisc-${var.name}"
-  parent_id = module.ai_foundry_core.hub_id
+  name                = var.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
-  body = {
-    properties = {
-      category      = "AIServices",
-      target        = azurerm_ai_services.this.endpoint,
-      authType      = "AAD",
-      isSharedToAll = true,
-      metadata = {
-        ApiType    = "Azure",
-        ResourceId = azurerm_ai_services.this.id
-      }
-    }
-  }
-  response_export_values = ["*"]
+  hub_id = module.ai_foundry_core.hub_id
+
+  sku    = var.sku
+  models = var.models
 }
+
+moved {
+  from = azurerm_search_service.this
+  to   = module.ai_foundry_services.azurerm_search_service.this
+}
+
+moved {
+  from = azapi_resource.ai_services_connection_search_service
+  to   = module.ai_foundry_services.azapi_resource.ai_services_connection_search_service
+}
+
+moved {
+  from = azapi_resource.ai_services_connection
+  to   = module.ai_foundry_services.azapi_resource.ai_services_connection
+}
+
+moved {
+  from = azurerm_ai_services.this
+  to   = module.ai_foundry_services.azurerm_ai_services.this
+}
+
+moved {
+  from = azurerm_cognitive_deployment.this
+  to   = module.ai_foundry_services.azurerm_cognitive_deployment.this
+}
+
 
 /* The following resources are OPTIONAL.
 resource "azurerm_application_insights" "this" {
