@@ -15,6 +15,33 @@ resource "azapi_resource" "hub" {
       storageAccount = azurerm_storage_account.this.id
       keyVault       = azurerm_key_vault.this.id
 
+      systemDatastoresAuthMode = "identity"
+      publicNetworkAccess      = "Enabled" # TODO: should be disabled
+
+      managedNetwork = {
+        isolationMode = "AllowInternetOutbound"
+        outboundRules = {
+          /*search = {
+            type = "PrivateEndpoint"
+            destination = {
+              serviceResourceId = var.search_service_id
+              subresourceTarget = "searchService"
+              sparkEnabled      = false
+              sparkStatus       = "Inactive"
+            }
+          },
+          aiservices = {
+            type = "PrivateEndpoint"
+            destination = {
+              serviceResourceId = var.ai_services_id
+              subresourceTarget = "account"
+              sparkEnabled      = false
+              sparkStatus       = "Inactive"
+            }
+          },*/
+        }
+      }
+
       /* Optional: To enable these field, the corresponding dependent resources need to be uncommented.
       applicationInsight = azurerm_application_insights.this.id
       containerRegistry = azurerm_container_registry.this.id
