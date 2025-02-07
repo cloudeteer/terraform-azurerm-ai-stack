@@ -34,6 +34,5 @@ resource "azurerm_storage_account" "this" {
   network_rules {
     bypass         = ["AzureServices"]
     default_action = "Deny"
-    ip_rules       = []
   }
 }
