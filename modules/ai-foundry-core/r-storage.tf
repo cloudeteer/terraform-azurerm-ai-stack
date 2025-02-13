@@ -37,3 +37,14 @@ resource "azurerm_storage_account" "this" {
     ip_rules       = var.allowed_ips
   }
 }
+
+resource "azurerm_role_assignment" "storage_account" {
+  for_each = toset([
+    "Storage Blob Data Contributor",
+    "Storage File Data Privileged Contributor",
+  ])
+
+  scope                = azurerm_storage_account.this.id
+  principal_id         = var.ai_developer_principal_id
+  role_definition_name = each.value
+}

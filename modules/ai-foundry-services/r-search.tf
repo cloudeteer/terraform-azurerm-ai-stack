@@ -9,6 +9,10 @@ resource "azurerm_search_service" "this" {
   public_network_access_enabled = true
   allowed_ips                   = var.allowed_ips
   network_rule_bypass_option    = "AzureServices"
+
+  identity {
+    type = "SystemAssigned"
+  }
 }
 
 resource "azapi_resource" "ai_services_connection_search_service" {
@@ -45,4 +49,15 @@ resource "azapi_resource" "search_service_outbound_rule_hub" {
       }
     }
   }
+}
+
+resource "azurerm_role_assignment" "search_service" {
+  for_each = toset([
+    "Search Index Data Contributor",
+    "Search Service Contributor"
+  ])
+
+  scope                = azurerm_search_service.this.id
+  role_definition_name = each.value
+  principal_id         = var.ai_developer_principal_id
 }

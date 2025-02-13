@@ -21,6 +21,7 @@ resource "azurerm_key_vault" "this" {
 
   purge_protection_enabled      = false # TODO: enable on production
   public_network_access_enabled = var.public_network_access
+  enable_rbac_authorization     = true
 
   network_acls {
     bypass         = "AzureServices"

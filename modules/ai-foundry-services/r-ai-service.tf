@@ -12,7 +12,7 @@ resource "azurerm_ai_services" "this" {
   sku_name              = var.sku
   custom_subdomain_name = "${var.name}-${lower(random_string.identifier.result)}"
 
-  # local_authentication_enabled = false
+  local_authentication_enabled = false
 
   public_network_access              = "Enabled" # Allow Selected Networks and Private Endpoints
   outbound_network_access_restricted = true
@@ -61,4 +61,16 @@ resource "azapi_resource" "ai_services_outbound_rule_hub" {
       }
     }
   }
+}
+
+resource "azurerm_role_assignment" "ai_service" {
+  for_each = toset([
+    "Cognitive Services Contributor",
+    "Cognitive Services OpenAI Contributor",
+    "Cognitive Services User",
+  ])
+
+  scope                = azurerm_ai_services.this.id
+  role_definition_name = each.value
+  principal_id         = var.ai_developer_principal_id
 }

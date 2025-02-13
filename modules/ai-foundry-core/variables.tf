@@ -1,3 +1,9 @@
+variable "ai_developer_principal_id" {
+  type        = string
+  default     = ""
+  description = "The principal ID of a user or group of AI Developers who will have access to this AI Foundry Hub."
+}
+
 variable "allowed_ips" {
   type        = list(string)
   description = "List of IP addresses to allow access to the service."

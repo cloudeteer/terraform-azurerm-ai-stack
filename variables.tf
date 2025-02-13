@@ -1,3 +1,9 @@
+variable "ai_developer_principal_id" {
+  type        = string
+  default     = ""
+  description = "The principal ID of a user or group of AI Developers who will have access to this AI Foundry Hub."
+}
+
 variable "allowed_ips" {
   type        = list(string)
   description = "List of IP addresses to allow access to the Azure AI service."
@@ -19,6 +25,18 @@ variable "location" {
   type        = string
   default     = "eastus"
   description = "Location of the resource group."
+}
+
+variable "description" {
+  type        = string
+  description = "The description of this workspace."
+  default     = ""
+}
+
+variable "friendly_name" {
+  type        = string
+  description = "The friendly name for this workspace. This value in mutable."
+  default     = ""
 }
 
 variable "hub_network_config" {
@@ -77,16 +95,4 @@ variable "sku" {
   type        = string
   description = "The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region"
   default     = "S0"
-}
-
-variable "description" {
-  type        = string
-  description = "The description of this workspace."
-  default     = ""
-}
-
-variable "friendly_name" {
-  type        = string
-  description = "The friendly name for this workspace. This value in mutable."
-  default     = ""
 }
