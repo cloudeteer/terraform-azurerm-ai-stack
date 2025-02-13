@@ -129,6 +129,29 @@ Type: `string`
 
 Default: `"S0"`
 
+## Outputs
+
+The following outputs are exported:
+
+### <a name="output_ai_service_endpoint"></a> [ai\_service\_endpoint](#output\_ai\_service\_endpoint)
+
+Description: The endpoint of the AI service
+
+### <a name="output_ai_service_id"></a> [ai\_service\_id](#output\_ai\_service\_id)
+
+Description: The ID of the AI service
+
+### <a name="output_hub_management_url"></a> [hub\_management\_url](#output\_hub\_management\_url)
+
+Description: The management URL for the AI Foundry Hub on the Azure AI platform
+
+### <a name="output_project_management_url"></a> [project\_management\_url](#output\_project\_management\_url)
+
+Description: The management URL for the AI Foundry Project on the Azure AI platform
+
+### <a name="output_project_url"></a> [project\_url](#output\_project\_url)
+
+Description: The URL to access the AI Foundry Project on the Azure AI platform
 <!-- END_TF_DOCS -->
 
 ## Contributions
