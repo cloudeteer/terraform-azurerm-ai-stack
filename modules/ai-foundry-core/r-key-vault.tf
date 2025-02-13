@@ -20,10 +20,11 @@ resource "azurerm_key_vault" "this" {
   sku_name  = "standard"
 
   purge_protection_enabled      = false # TODO: enable on production
-  public_network_access_enabled = false
+  public_network_access_enabled = var.public_network_access
 
   network_acls {
     bypass         = "AzureServices"
     default_action = "Deny"
+    ip_rules       = var.allowed_ips
   }
 }

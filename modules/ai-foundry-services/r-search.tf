@@ -5,6 +5,10 @@ resource "azurerm_search_service" "this" {
 
   local_authentication_enabled = false
   sku                          = "standard"
+
+  public_network_access_enabled = true
+  allowed_ips                   = var.allowed_ips
+  network_rule_bypass_option    = "AzureServices"
 }
 
 resource "azapi_resource" "ai_services_connection_search_service" {

@@ -28,11 +28,12 @@ resource "azurerm_storage_account" "this" {
   is_hns_enabled                    = false
   large_file_share_enabled          = false
   min_tls_version                   = "TLS1_2"
-  public_network_access_enabled     = false
+  public_network_access_enabled     = var.public_network_access
   shared_access_key_enabled         = false # ** NOTE: This requires storage_use_azuread to be set in provider config
 
   network_rules {
     bypass         = ["AzureServices"]
     default_action = "Deny"
+    ip_rules       = var.allowed_ips
   }
 }

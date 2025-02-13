@@ -67,7 +67,7 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
-### <a name="input_ip_rules"></a> [ip\_rules](#input\_ip\_rules)
+### <a name="input_allowed_ips"></a> [allowed\_ips](#input\_allowed\_ips)
 
 Description: List of IP addresses to allow access to the service.
 

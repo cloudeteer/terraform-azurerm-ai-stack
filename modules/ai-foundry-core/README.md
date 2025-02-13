@@ -63,6 +63,14 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
+### <a name="input_allowed_ips"></a> [allowed\_ips](#input\_allowed\_ips)
+
+Description: List of IP addresses to allow access to the service.
+
+Type: `list(string)`
+
+Default: `[]`
+
 ### <a name="input_description"></a> [description](#input\_description)
 
 Description: The description of this workspace.
@@ -88,7 +96,6 @@ Optional arguments:
 Argument | Description
 -- | --
 `isolation_mode` | Isolation mode for the managed network of a machine learning workspace. Possible values are `AllowOnlyApprovedOutbound`, `AllowInternetOutbound`, or `Disabled`.
-`public_network_access` | Whether requests from Public Network are allowed.
 
 **NOTE**:
 
@@ -96,8 +103,7 @@ Type:
 
 ```hcl
 object({
-    isolation_mode        = optional(string, "AllowOnlyApprovedOutbound")
-    public_network_access = optional(bool, false)
+    isolation_mode = optional(string, "AllowOnlyApprovedOutbound")
   })
 ```
 
@@ -110,6 +116,14 @@ Description: Location of the resource group.
 Type: `string`
 
 Default: `"eastus"`
+
+### <a name="input_public_network_access"></a> [public\_network\_access](#input\_public\_network\_access)
+
+Description: Allow Public Access on AI Services, Storage Account, Key Vault, etc.
+
+Type: `bool`
+
+Default: `false`
 
 ## Outputs
 

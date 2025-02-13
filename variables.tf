@@ -1,3 +1,9 @@
+variable "allowed_ips" {
+  type        = list(string)
+  description = "List of IP addresses to allow access to the Azure AI service."
+  default     = []
+}
+
 # variable "cmk_keyvault_key_uri" {
 #   type        = string
 #   description = "Key vault uri to access the encryption key."
@@ -56,6 +62,12 @@ variable "name" {
   description = "The name of the this resource."
 }
 
+variable "public_network_access" {
+  type        = bool
+  default     = false
+  description = "Allow Public Access on AI Services, Storage Account, Key Vault, etc."
+}
+
 variable "resource_group_name" {
   type        = string
   description = "The resource group where the resources will be deployed."
@@ -77,10 +89,4 @@ variable "friendly_name" {
   type        = string
   description = "The friendly name for this workspace. This value in mutable."
   default     = ""
-}
-
-variable "ip_rules" {
-  type        = list(string)
-  description = "List of IP addresses to allow access to the Azure AI service."
-  default     = []
 }

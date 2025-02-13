@@ -17,7 +17,7 @@ resource "azapi_resource" "hub" {
       keyVault       = azurerm_key_vault.this.id
 
       provisionNetworkNow      = true
-      publicNetworkAccess      = var.hub_network_config.public_network_access ? "Enabled" : "Disabled"
+      publicNetworkAccess      = var.public_network_access ? "Enabled" : "Disabled"
       systemDatastoresAuthMode = "identity"
 
       managedNetwork = {

@@ -19,7 +19,7 @@ resource "azurerm_ai_services" "this" {
 
   network_acls {
     default_action = "Deny"
-    ip_rules       = var.ip_rules
+    ip_rules       = var.allowed_ips
   }
 
   identity {

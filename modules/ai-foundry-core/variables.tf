@@ -1,3 +1,9 @@
+variable "allowed_ips" {
+  type        = list(string)
+  description = "List of IP addresses to allow access to the service."
+  default     = []
+}
+
 variable "description" {
   type        = string
   description = "The description of this workspace."
@@ -12,8 +18,7 @@ variable "friendly_name" {
 
 variable "hub_network_config" {
   type = object({
-    isolation_mode        = optional(string, "AllowOnlyApprovedOutbound")
-    public_network_access = optional(bool, false)
+    isolation_mode = optional(string, "AllowOnlyApprovedOutbound")
   })
 
   default = {}
@@ -26,7 +31,6 @@ variable "hub_network_config" {
     Argument | Description
     -- | --
     `isolation_mode` | Isolation mode for the managed network of a machine learning workspace. Possible values are `AllowOnlyApprovedOutbound`, `AllowInternetOutbound`, or `Disabled`.
-    `public_network_access` | Whether requests from Public Network are allowed.
 
     **NOTE**:
   DESCRIPTION
@@ -41,6 +45,12 @@ variable "location" {
 variable "name" {
   type        = string
   description = "The name of the this resource."
+}
+
+variable "public_network_access" {
+  type        = bool
+  default     = false
+  description = "Allow Public Access on AI Services, Storage Account, Key Vault, etc."
 }
 
 variable "resource_group_id" {

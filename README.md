@@ -17,6 +17,8 @@ Terraform Module Template
 This example demonstrates the usage of this Terraform module with default settings.
 
 ```hcl
+data "http" "my_current_public_ip" { url = "https://ipv4.icanhazip.com" }
+
 resource "azurerm_resource_group" "example" {
   location = "swedencentral"
   name     = "rg-example-dev-swec-01"
@@ -28,6 +30,9 @@ module "example" {
   name                = trimprefix(azurerm_resource_group.example.name, "rg-")
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
+
+  allowed_ips           = [chomp(data.http.my_current_public_ip.response_body)]
+  public_network_access = true
 }
 ```
 
@@ -79,6 +84,14 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
+### <a name="input_allowed_ips"></a> [allowed\_ips](#input\_allowed\_ips)
+
+Description: List of IP addresses to allow access to the Azure AI service.
+
+Type: `list(string)`
+
+Default: `[]`
+
 ### <a name="input_description"></a> [description](#input\_description)
 
 Description: The description of this workspace.
@@ -119,14 +132,6 @@ object({
 
 Default: `{}`
 
-### <a name="input_ip_rules"></a> [ip\_rules](#input\_ip\_rules)
-
-Description: List of IP addresses to allow access to the Azure AI service.
-
-Type: `list(string)`
-
-Default: `[]`
-
 ### <a name="input_location"></a> [location](#input\_location)
 
 Description: Location of the resource group.
@@ -152,6 +157,14 @@ list(object({
 ```
 
 Default: `[]`
+
+### <a name="input_public_network_access"></a> [public\_network\_access](#input\_public\_network\_access)
+
+Description: Allow Public Access on AI Services, Storage Account, Key Vault, etc.
+
+Type: `bool`
+
+Default: `false`
 
 ### <a name="input_sku"></a> [sku](#input\_sku)
 
