@@ -1,10 +1,16 @@
+resource "random_string" "identifier" {
+  length  = 8
+  upper   = false
+  special = false
+}
+
 resource "azurerm_ai_services" "this" {
   name                = "ais-${var.name}"
   location            = var.location
   resource_group_name = var.resource_group_name
 
   sku_name              = var.sku
-  custom_subdomain_name = var.name
+  custom_subdomain_name = "${var.name}-${lower(random_string.identifier.result)}"
 
   # local_authentication_enabled = false
 
