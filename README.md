@@ -18,8 +18,8 @@ This example demonstrates the usage of this Terraform module with default settin
 
 ```hcl
 resource "azurerm_resource_group" "example" {
-  location = "germanywestcentral"
-  name     = "rg-example-dev-gwc-01"
+  location = "swedencentral"
+  name     = "rg-example-dev-swec-01"
 }
 
 module "example" {

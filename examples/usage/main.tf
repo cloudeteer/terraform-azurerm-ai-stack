@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "example" {
-  location = "germanywestcentral"
-  name     = "rg-example-dev-gwc-01"
+  location = "swedencentral"
+  name     = "rg-example-dev-swec-01"
 }
 
 module "example" {
