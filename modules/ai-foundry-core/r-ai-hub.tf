@@ -10,17 +10,19 @@ resource "azapi_resource" "hub" {
 
   body = {
     properties = {
-      description    = var.description
-      friendlyName   = coalesce(var.friendly_name, "AI Hub")
+      description  = var.description
+      friendlyName = coalesce(var.friendly_name, "AI Hub")
+
       storageAccount = azurerm_storage_account.this.id
       keyVault       = azurerm_key_vault.this.id
 
+      provisionNetworkNow      = true
+      publicNetworkAccess      = var.hub_network_config.public_network_access ? "Enabled" : "Disabled"
       systemDatastoresAuthMode = "identity"
-      publicNetworkAccess      = "Enabled" # TODO: should be disabled
 
       managedNetwork = {
         # ** NOTE ** If you use any other option here, you have to create the private endpoints (on outboundRules below) to private storage account and key vault by yourself. Using AllowOnlyApprovedOutbound creates those private endpoints as required outbound rule in the managed virtual network automatically.
-        isolationMode = "AllowOnlyApprovedOutbound"
+        isolationMode = var.hub_network_config.isolation_mode
         outboundRules = {
           /*search = {
             type = "PrivateEndpoint"

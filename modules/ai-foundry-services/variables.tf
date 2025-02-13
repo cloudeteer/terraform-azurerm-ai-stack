@@ -38,3 +38,9 @@ variable "sku" {
   description = "The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region"
   default     = "S0"
 }
+
+variable "ip_rules" {
+  type        = list(string)
+  description = "List of IP addresses to allow access to the service."
+  default     = []
+}

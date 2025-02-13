@@ -10,8 +10,9 @@ module "ai_foundry_core" {
   resource_group_id   = local.resource_group_id
   resource_group_name = var.resource_group_name
 
-  description   = var.description
-  friendly_name = var.friendly_name
+  description        = var.description
+  friendly_name      = var.friendly_name
+  hub_network_config = var.hub_network_config
 }
 
 moved {
@@ -43,8 +44,9 @@ module "ai_foundry_services" {
 
   hub_id = module.ai_foundry_core.hub_id
 
-  sku    = var.sku
-  models = var.models
+  sku      = var.sku
+  models   = var.models
+  ip_rules = var.ip_rules
 }
 
 moved {

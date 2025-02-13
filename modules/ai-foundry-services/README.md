@@ -32,6 +32,8 @@ The following resources are used by this module:
 
 - [azapi_resource.ai_services_connection](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azapi_resource.ai_services_connection_search_service](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azapi_resource.ai_services_outbound_rule_hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azapi_resource.search_service_outbound_rule_hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
 - [azurerm_ai_services.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/ai_services) (resource)
 - [azurerm_cognitive_deployment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cognitive_deployment) (resource)
 - [azurerm_search_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service) (resource)
@@ -61,6 +63,14 @@ Type: `string`
 ## Optional Inputs
 
 The following input variables are optional (have default values):
+
+### <a name="input_ip_rules"></a> [ip\_rules](#input\_ip\_rules)
+
+Description: List of IP addresses to allow access to the service.
+
+Type: `list(string)`
+
+Default: `[]`
 
 ### <a name="input_location"></a> [location](#input\_location)
 

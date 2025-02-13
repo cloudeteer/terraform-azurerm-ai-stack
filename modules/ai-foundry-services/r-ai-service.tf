@@ -6,6 +6,16 @@ resource "azurerm_ai_services" "this" {
   sku_name              = var.sku
   custom_subdomain_name = var.name
 
+  # local_authentication_enabled = false
+
+  public_network_access              = "Enabled" # Allow Selected Networks and Private Endpoints
+  outbound_network_access_restricted = true
+
+  network_acls {
+    default_action = "Deny"
+    ip_rules       = var.ip_rules
+  }
+
   identity {
     type = "SystemAssigned"
   }
@@ -29,4 +39,20 @@ resource "azapi_resource" "ai_services_connection" {
     }
   }
   response_export_values = ["*"]
+}
+
+resource "azapi_resource" "ai_services_outbound_rule_hub" {
+  type      = "Microsoft.MachineLearningServices/workspaces/outboundRules@2024-10-01-preview"
+  name      = "pe-${azurerm_ai_services.this.name}"
+  parent_id = var.hub_id
+
+  body = {
+    properties = {
+      type = "PrivateEndpoint"
+      destination = {
+        serviceResourceId = azurerm_ai_services.this.id
+        subresourceTarget = "account"
+      }
+    }
+  }
 }

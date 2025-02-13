@@ -15,6 +15,28 @@ variable "location" {
   description = "Location of the resource group."
 }
 
+variable "hub_network_config" {
+  type = object({
+    isolation_mode        = optional(string, "AllowOnlyApprovedOutbound")
+    public_network_access = optional(bool, false)
+  })
+
+  default = {}
+
+  description = <<-DESCRIPTION
+    Network configuration for the AI Hub.
+
+    Optional arguments:
+
+    Argument | Description
+    -- | --
+    `isolation_mode` | Isolation mode for the managed network of a machine learning workspace. Possible values are `AllowOnlyApprovedOutbound`, `AllowInternetOutbound`, or `Disabled`.
+    `public_network_access` | Whether requests from Public Network are allowed.
+
+    **NOTE**:
+  DESCRIPTION
+}
+
 variable "models" {
   type = list(object({
     name         = string
@@ -55,4 +77,10 @@ variable "friendly_name" {
   type        = string
   description = "The friendly name for this workspace. This value in mutable."
   default     = ""
+}
+
+variable "ip_rules" {
+  type        = list(string)
+  description = "List of IP addresses to allow access to the Azure AI service."
+  default     = []
 }

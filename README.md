@@ -95,6 +95,38 @@ Type: `string`
 
 Default: `""`
 
+### <a name="input_hub_network_config"></a> [hub\_network\_config](#input\_hub\_network\_config)
+
+Description: Network configuration for the AI Hub.
+
+Optional arguments:
+
+Argument | Description
+-- | --
+`isolation_mode` | Isolation mode for the managed network of a machine learning workspace. Possible values are `AllowOnlyApprovedOutbound`, `AllowInternetOutbound`, or `Disabled`.
+`public_network_access` | Whether requests from Public Network are allowed.
+
+**NOTE**:
+
+Type:
+
+```hcl
+object({
+    isolation_mode        = optional(string, "AllowOnlyApprovedOutbound")
+    public_network_access = optional(bool, false)
+  })
+```
+
+Default: `{}`
+
+### <a name="input_ip_rules"></a> [ip\_rules](#input\_ip\_rules)
+
+Description: List of IP addresses to allow access to the Azure AI service.
+
+Type: `list(string)`
+
+Default: `[]`
+
 ### <a name="input_location"></a> [location](#input\_location)
 
 Description: Location of the resource group.
