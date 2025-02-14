@@ -39,10 +39,10 @@ resource "azurerm_storage_account" "this" {
 }
 
 resource "azurerm_role_assignment" "storage_account" {
-  for_each = toset([
+  for_each = var.create_rbac ? toset([
     "Storage Blob Data Contributor",
     "Storage File Data Privileged Contributor",
-  ])
+  ]) : []
 
   scope                = azurerm_storage_account.this.id
   principal_id         = var.ai_developer_principal_id

@@ -32,9 +32,11 @@ module "example" {
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 
+  create_rbac               = true
   ai_developer_principal_id = data.azurerm_client_config.current.object_id
-  allowed_ips               = [chomp(data.http.my_current_public_ip.response_body)]
-  public_network_access     = true
+
+  public_network_access = true
+  allowed_ips           = [chomp(data.http.my_current_public_ip.response_body)]
 }
 ```
 
@@ -101,6 +103,14 @@ Description: List of IP addresses to allow access to the Azure AI service.
 Type: `list(string)`
 
 Default: `[]`
+
+### <a name="input_create_rbac"></a> [create\_rbac](#input\_create\_rbac)
+
+Description: Create Aure Role Assignments and grant all needed permissions to the `principal_id`.
+
+Type: `bool`
+
+Default: `false`
 
 ### <a name="input_description"></a> [description](#input\_description)
 

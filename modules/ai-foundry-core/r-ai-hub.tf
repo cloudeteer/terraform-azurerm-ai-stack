@@ -4,9 +4,10 @@ resource "azurerm_resource_group" "developer" {
 }
 
 resource "azurerm_role_assignment" "rg_dev" {
-  for_each = toset([
+  for_each = var.create_rbac ? toset([
     "Contributor",
-  ])
+    "User Access Administrator",
+  ]) : []
 
   scope                = azurerm_resource_group.developer.id
   role_definition_name = each.value

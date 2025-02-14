@@ -64,11 +64,11 @@ resource "azapi_resource" "ai_services_outbound_rule_hub" {
 }
 
 resource "azurerm_role_assignment" "ai_service" {
-  for_each = toset([
+  for_each = var.create_rbac ? toset([
     "Cognitive Services Contributor",
     "Cognitive Services OpenAI Contributor",
     "Cognitive Services User",
-  ])
+  ]) : []
 
   scope                = azurerm_ai_services.this.id
   role_definition_name = each.value

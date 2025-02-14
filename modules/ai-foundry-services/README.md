@@ -85,6 +85,14 @@ Type: `list(string)`
 
 Default: `[]`
 
+### <a name="input_create_rbac"></a> [create\_rbac](#input\_create\_rbac)
+
+Description: Create Aure Role Assignments and grant all needed permissions to the `principal_id`.
+
+Type: `bool`
+
+Default: `false`
+
 ### <a name="input_location"></a> [location](#input\_location)
 
 Description: Location of the resource group.

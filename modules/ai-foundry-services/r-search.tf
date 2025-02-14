@@ -52,10 +52,10 @@ resource "azapi_resource" "search_service_outbound_rule_hub" {
 }
 
 resource "azurerm_role_assignment" "search_service" {
-  for_each = toset([
+  for_each = var.create_rbac ? toset([
     "Search Index Data Contributor",
     "Search Service Contributor"
-  ])
+  ]) : []
 
   scope                = azurerm_search_service.this.id
   role_definition_name = each.value

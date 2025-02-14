@@ -27,6 +27,12 @@ variable "location" {
   description = "Location of the resource group."
 }
 
+variable "create_rbac" {
+  type        = bool
+  default     = false
+  description = "Create Aure Role Assignments and grant all needed permissions to the `principal_id`."
+}
+
 variable "description" {
   type        = string
   description = "The description of this workspace."
