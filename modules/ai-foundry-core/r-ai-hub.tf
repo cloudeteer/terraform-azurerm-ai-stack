@@ -6,7 +6,6 @@ resource "azurerm_resource_group" "developer" {
 resource "azurerm_role_assignment" "rg_developer_ai_developer" {
   for_each = var.create_rbac ? toset([
     "Contributor",
-    "User Access Administrator",
   ]) : []
 
   scope                = azurerm_resource_group.developer.id
