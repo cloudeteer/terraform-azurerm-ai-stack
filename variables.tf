@@ -67,6 +67,12 @@ variable "hub_network_config" {
   DESCRIPTION
 }
 
+variable "local_authentication_enabled" {
+  type        = bool
+  default     = false
+  description = "Specifies whether the services allows authentication using local API keys."
+}
+
 variable "models" {
   type = list(object({
     name         = string

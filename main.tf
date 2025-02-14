@@ -48,11 +48,12 @@ module "ai_foundry_services" {
 
   hub_id = module.ai_foundry_core.hub_id
 
-  ai_developer_principal_id = var.ai_developer_principal_id
-  allowed_ips               = var.allowed_ips
-  create_rbac               = var.create_rbac
-  models                    = var.models
-  sku                       = var.sku
+  ai_developer_principal_id    = var.ai_developer_principal_id
+  allowed_ips                  = var.allowed_ips
+  create_rbac                  = var.create_rbac
+  local_authentication_enabled = var.local_authentication_enabled
+  models                       = var.models
+  sku                          = var.sku
 }
 
 moved {

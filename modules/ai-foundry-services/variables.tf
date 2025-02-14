@@ -21,6 +21,12 @@ variable "hub_id" {
   description = "The ID of the Azure AI hub."
 }
 
+variable "local_authentication_enabled" {
+  type        = bool
+  default     = false
+  description = "Specifies whether the services allows authentication using local API keys."
+}
+
 variable "location" {
   type        = string
   default     = "eastus"

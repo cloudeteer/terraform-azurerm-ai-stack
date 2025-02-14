@@ -3,7 +3,7 @@ resource "azurerm_search_service" "this" {
   location            = var.location
   resource_group_name = var.resource_group_name
 
-  local_authentication_enabled = false
+  local_authentication_enabled = var.local_authentication_enabled
   sku                          = "standard"
 
   public_network_access_enabled = true

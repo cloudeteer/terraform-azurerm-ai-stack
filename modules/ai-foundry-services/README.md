@@ -94,6 +94,14 @@ Type: `bool`
 
 Default: `false`
 
+### <a name="input_local_authentication_enabled"></a> [local\_authentication\_enabled](#input\_local\_authentication\_enabled)
+
+Description: Specifies whether the services allows authentication using local API keys.
+
+Type: `bool`
+
+Default: `false`
+
 ### <a name="input_location"></a> [location](#input\_location)
 
 Description: Location of the resource group.

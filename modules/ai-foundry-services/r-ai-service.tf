@@ -12,7 +12,7 @@ resource "azurerm_ai_services" "this" {
   sku_name              = var.sku
   custom_subdomain_name = "${var.name}-${lower(random_string.identifier.result)}"
 
-  local_authentication_enabled = false
+  local_authentication_enabled = var.local_authentication_enabled
 
   public_network_access              = "Enabled" # Allow Selected Networks and Private Endpoints
   outbound_network_access_restricted = true
