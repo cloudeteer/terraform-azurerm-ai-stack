@@ -1,3 +1,19 @@
+resource "azurerm_resource_group" "developer" {
+  name     = format("rg-%s_developer", var.name)
+  location = var.location
+}
+
+resource "azurerm_role_assignment" "rg_dev" {
+  for_each = toset([
+    "Contributor",
+  ])
+
+  scope                = azurerm_resource_group.developer.id
+  role_definition_name = each.value
+  principal_id         = var.ai_developer_principal_id
+}
+
+
 resource "azapi_resource" "hub" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-10-01-preview"
   name      = "hub-${var.name}"
@@ -12,6 +28,10 @@ resource "azapi_resource" "hub" {
     properties = {
       description  = var.description
       friendlyName = coalesce(var.friendly_name, "AI Hub")
+
+      workspaceHubConfig = {
+        defaultWorkspaceResourceGroup = azurerm_resource_group.developer.id
+      }
 
       storageAccount = azurerm_storage_account.this.id
       keyVault       = azurerm_key_vault.this.id
