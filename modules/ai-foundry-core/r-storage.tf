@@ -38,7 +38,7 @@ resource "azurerm_storage_account" "this" {
   }
 }
 
-resource "azurerm_role_assignment" "storage_account" {
+resource "azurerm_role_assignment" "storage_account_ai_developer" {
   for_each = var.create_rbac ? toset([
     "Storage Blob Data Contributor",
     "Storage File Data Privileged Contributor",

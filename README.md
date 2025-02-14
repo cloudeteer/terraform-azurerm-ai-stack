@@ -18,6 +18,7 @@ This example demonstrates the usage of this Terraform module with default settin
 
 ```hcl
 data "azurerm_client_config" "current" {}
+
 data "http" "my_current_public_ip" { url = "https://ipv4.icanhazip.com" }
 
 resource "azurerm_resource_group" "example" {

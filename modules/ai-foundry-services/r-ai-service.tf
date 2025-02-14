@@ -63,11 +63,12 @@ resource "azapi_resource" "ai_services_outbound_rule_hub" {
   }
 }
 
-resource "azurerm_role_assignment" "ai_service" {
+resource "azurerm_role_assignment" "ai_service_developer" {
   for_each = var.create_rbac ? toset([
     "Cognitive Services Contributor",
     "Cognitive Services OpenAI Contributor",
     "Cognitive Services User",
+    "Role Based Access Control Administrator", # Needed to Deploy Web Apps from WebUI ai.azure.com
   ]) : []
 
   scope                = azurerm_ai_services.this.id

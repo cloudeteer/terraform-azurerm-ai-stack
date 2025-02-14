@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "developer" {
   location = var.location
 }
 
-resource "azurerm_role_assignment" "rg_dev" {
+resource "azurerm_role_assignment" "rg_developer_ai_developer" {
   for_each = var.create_rbac ? toset([
     "Contributor",
     "User Access Administrator",
@@ -13,7 +13,6 @@ resource "azurerm_role_assignment" "rg_dev" {
   role_definition_name = each.value
   principal_id         = var.ai_developer_principal_id
 }
-
 
 resource "azapi_resource" "hub" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-10-01-preview"
@@ -90,4 +89,14 @@ resource "azapi_resource" "hub" {
       tags # tags are occasionally added by Azure
     ]
   }
+}
+
+resource "azurerm_role_assignment" "hub_ai_developer" {
+  for_each = var.create_rbac ? toset([
+    "Azure AI Developer",
+  ]) : []
+
+  scope                = azapi_resource.hub.output.id
+  role_definition_name = each.value
+  principal_id         = var.ai_developer_principal_id
 }
