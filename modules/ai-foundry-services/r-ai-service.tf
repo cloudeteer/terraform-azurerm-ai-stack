@@ -18,7 +18,7 @@ resource "azurerm_ai_services" "this" {
   outbound_network_access_restricted = true
 
   network_acls {
-    default_action = "Deny"
+    default_action = length(var.allowed_ips) > 0 ? "Deny" : "Allow"
     ip_rules       = var.allowed_ips
   }
 

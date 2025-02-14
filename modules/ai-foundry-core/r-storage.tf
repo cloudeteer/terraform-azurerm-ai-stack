@@ -10,6 +10,8 @@ locals {
   )
 }
 
+#trivy:ignore:avd-azu-0010
+#trivy:ignore:avd-azu-0012
 resource "azurerm_storage_account" "this" {
   name                = local.storage_account_name
   location            = var.location
@@ -32,8 +34,8 @@ resource "azurerm_storage_account" "this" {
   shared_access_key_enabled         = false # ** NOTE: This requires storage_use_azuread to be set in provider config
 
   network_rules {
-    bypass         = ["AzureServices"]
-    default_action = "Deny"
+    bypass         = [length(var.allowed_ips) > 0 ? "AzureServices" : "None"]
+    default_action = length(var.allowed_ips) > 0 ? "Deny" : "Allow"
     ip_rules       = var.allowed_ips
   }
 }

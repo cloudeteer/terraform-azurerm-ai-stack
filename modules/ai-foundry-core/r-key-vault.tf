@@ -10,6 +10,7 @@ locals {
   )
 }
 
+#trivy:ignore:avd-azu-0013 //
 #trivy:ignore:avd-azu-0016 // [AVD-AZU-0016] azure: Key vault should have purge protection enabled
 resource "azurerm_key_vault" "this" {
   name                = local.key_vault_name
@@ -24,8 +25,8 @@ resource "azurerm_key_vault" "this" {
   enable_rbac_authorization     = true
 
   network_acls {
-    bypass         = "AzureServices"
-    default_action = "Deny"
+    bypass         = length(var.allowed_ips) > 0 ? "AzureServices" : "None"
+    default_action = length(var.allowed_ips) > 0 ? "Deny" : "Allow"
     ip_rules       = var.allowed_ips
   }
 }

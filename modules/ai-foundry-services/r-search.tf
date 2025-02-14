@@ -8,7 +8,7 @@ resource "azurerm_search_service" "this" {
 
   public_network_access_enabled = true
   allowed_ips                   = var.allowed_ips
-  network_rule_bypass_option    = "AzureServices"
+  network_rule_bypass_option    = length(var.allowed_ips) > 0 ? "AzureServices" : "None"
 
   identity {
     type = "SystemAssigned"
