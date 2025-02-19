@@ -29,3 +29,8 @@ output "project_url" {
     urlencode(data.azurerm_client_config.current.tenant_id)
   )
 }
+
+output "storage_account_id" {
+  value       = azurerm_storage_account.this.id
+  description = "The Azure Storage Account ID"
+}

@@ -68,7 +68,17 @@ resource "azurerm_role_assignment" "search_service_ai_service" {
     "Search Service Contributor"
   ]) : []
 
-  scope                = azurerm_ai_services.this.id
+  scope                = azurerm_search_service.this.id
   role_definition_name = each.value
-  principal_id         = var.ai_developer_principal_id
+  principal_id         = azurerm_ai_services.this.identity[0].principal_id
+}
+
+resource "azurerm_role_assignment" "storage_account_search_service" {
+  for_each = var.create_rbac ? toset([
+    "Storage Blob Data Reader",
+  ]) : []
+
+  principal_id         = azurerm_search_service.this.identity[0].principal_id
+  role_definition_name = each.value
+  scope                = var.storage_account_id
 }

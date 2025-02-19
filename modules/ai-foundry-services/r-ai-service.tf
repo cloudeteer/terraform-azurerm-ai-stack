@@ -71,7 +71,27 @@ resource "azurerm_role_assignment" "ai_service_developer" {
     "User Access Administrator", # Needed to Deploy Web Apps from WebUI ai.azure.com
   ]) : []
 
-  scope                = azurerm_ai_services.this.id
-  role_definition_name = each.value
   principal_id         = var.ai_developer_principal_id
+  role_definition_name = each.value
+  scope                = azurerm_ai_services.this.id
+}
+
+resource "azurerm_role_assignment" "ai_service_search_service" {
+  for_each = var.create_rbac ? toset([
+    "Cognitive Services OpenAI Contributor",
+  ]) : []
+
+  principal_id         = azurerm_search_service.this.identity[0].principal_id
+  role_definition_name = each.value
+  scope                = azurerm_ai_services.this.id
+}
+
+resource "azurerm_role_assignment" "storage_account_ai_service" {
+  for_each = var.create_rbac ? toset([
+    "Storage Blob Data Contributor",
+  ]) : []
+
+  principal_id         = azurerm_ai_services.this.identity[0].principal_id
+  role_definition_name = each.value
+  scope                = var.storage_account_id
 }

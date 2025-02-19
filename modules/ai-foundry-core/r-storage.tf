@@ -46,7 +46,7 @@ resource "azurerm_role_assignment" "storage_account_ai_developer" {
     "Storage File Data Privileged Contributor",
   ]) : []
 
-  scope                = azurerm_storage_account.this.id
   principal_id         = var.ai_developer_principal_id
   role_definition_name = each.value
+  scope                = azurerm_storage_account.this.id
 }

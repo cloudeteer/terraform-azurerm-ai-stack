@@ -54,6 +54,7 @@ module "ai_foundry_services" {
   local_authentication_enabled = var.local_authentication_enabled
   models                       = var.models
   sku                          = var.sku
+  storage_account_id           = module.ai_foundry_core.storage_account_id
 }
 
 moved {

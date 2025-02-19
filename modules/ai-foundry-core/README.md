@@ -165,4 +165,8 @@ Description: The management URL for the AI Foundry Project on the Azure AI platf
 ### <a name="output_project_url"></a> [project\_url](#output\_project\_url)
 
 Description: The URL to access the AI Foundry Project on the Azure AI platform
+
+### <a name="output_storage_account_id"></a> [storage\_account\_id](#output\_storage\_account\_id)
+
+Description: The Azure Storage Account ID
 <!-- END_TF_DOCS -->

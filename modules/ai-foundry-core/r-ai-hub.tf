@@ -8,9 +8,9 @@ resource "azurerm_role_assignment" "rg_developer_ai_developer" {
     "Contributor",
   ]) : []
 
-  scope                = azurerm_resource_group.developer.id
-  role_definition_name = each.value
   principal_id         = var.ai_developer_principal_id
+  role_definition_name = each.value
+  scope                = azurerm_resource_group.developer.id
 }
 
 resource "azapi_resource" "hub" {
@@ -95,7 +95,7 @@ resource "azurerm_role_assignment" "hub_ai_developer" {
     "Azure AI Developer",
   ]) : []
 
-  scope                = azapi_resource.hub.output.id
-  role_definition_name = each.value
   principal_id         = var.ai_developer_principal_id
+  role_definition_name = each.value
+  scope                = azapi_resource.hub.output.id
 }
