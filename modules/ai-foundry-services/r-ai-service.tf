@@ -68,12 +68,48 @@ resource "azurerm_role_assignment" "ai_service_developer" {
     "Cognitive Services Contributor",
     "Cognitive Services OpenAI Contributor",
     "Cognitive Services User",
-    "User Access Administrator", # Needed to Deploy Web Apps from WebUI ai.azure.com
   ]) : []
 
   principal_id         = var.ai_developer_principal_id
   role_definition_name = each.value
   scope                = azurerm_ai_services.this.id
+}
+
+resource "azurerm_role_assignment" "ai_service_developer_user_access_administrator" {
+  count = var.create_rbac ? 1 : 0
+
+  description          = "This role assignment is needed to deploy web apps from ai.azure.com"
+  principal_id         = var.ai_developer_principal_id
+  role_definition_name = "User Access Administrator"
+  scope                = azurerm_ai_services.this.id
+
+  condition_version = "2.0"
+  condition         = <<-CONDITION
+    (
+        (
+          !(ActionMatches{'Microsoft.Authorization/roleAssignments/write'})
+        )
+        OR
+        (
+          @Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {5e0bd9bd-7b93-4f28-af87-19fc36ad61bd}
+        )
+    )
+    AND
+    (
+        (
+          !(ActionMatches{'Microsoft.Authorization/roleAssignments/delete'})
+        )
+        OR
+        (
+          @Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {5e0bd9bd-7b93-4f28-af87-19fc36ad61bd}
+        )
+    )
+  CONDITION
+}
+
+moved {
+  from = azurerm_role_assignment.ai_service_developer["User Access Administrator"]
+  to   = azurerm_role_assignment.ai_service_developer_user_access_administrator[0]
 }
 
 resource "azurerm_role_assignment" "ai_service_search_service" {
