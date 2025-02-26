@@ -4,6 +4,7 @@ resource "azurerm_search_service" "this" {
   resource_group_name = var.resource_group_name
 
   local_authentication_enabled = var.local_authentication_enabled
+  authentication_failure_mode  = var.local_authentication_enabled ? "http401WithBearerChallenge" : null
   sku                          = "standard"
 
   public_network_access_enabled = true
@@ -23,7 +24,7 @@ resource "azapi_resource" "ai_services_connection_search_service" {
   body = {
     properties = {
       category      = "CognitiveSearch",
-      target        = "https://${azurerm_search_service.this.name}.search.windows.net",
+      target        = "https://${azurerm_search_service.this.name}.search.windows.net/",
       authType      = "AAD",
       isSharedToAll = true,
       metadata = {
