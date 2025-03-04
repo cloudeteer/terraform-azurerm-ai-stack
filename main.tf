@@ -36,20 +36,3 @@ module "ai_foundry_services" {
   sku                          = var.sku
   storage_account_id           = module.ai_foundry_core.storage_account_id
 }
-
-/* The following resources are OPTIONAL.
-resource "azurerm_application_insights" "this" {
-  name                = "appi-${var.name}"
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  application_type    = "web"
-}
-
-resource "azurerm_container_registry" "this" {
-  name                     = "cr-${var.name}"
-  resource_group_name      = var.resource_group_name
-  location                 = var.location
-  sku                      = "premium"
-  admin_enabled            = true
-}
-*/

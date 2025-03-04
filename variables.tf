@@ -10,17 +10,6 @@ variable "allowed_ips" {
   default     = []
 }
 
-# variable "cmk_keyvault_key_uri" {
-#   type        = string
-#   description = "Key vault uri to access the encryption key."
-# }
-
-# variable "encryption_status" {
-#   type        = string
-#   description = "Indicates whether or not the encryption is enabled for the workspace."
-#   default     = "Enabled"
-# }
-
 variable "location" {
   type        = string
   default     = "eastus"
