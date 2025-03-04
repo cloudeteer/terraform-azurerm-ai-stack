@@ -10,8 +10,8 @@ locals {
   )
 }
 
-#trivy:ignore:avd-azu-0013 //
-#trivy:ignore:avd-azu-0016 // [AVD-AZU-0016] azure: Key vault should have purge protection enabled
+#trivy:ignore:avd-azu-0013 // Key vault should have the network acl block specified
+#trivy:ignore:avd-azu-0016 // Key vault should have purge protection enabled
 resource "azurerm_key_vault" "this" {
   name                = local.key_vault_name
   location            = var.location

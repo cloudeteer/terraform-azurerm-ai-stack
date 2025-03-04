@@ -10,8 +10,8 @@ locals {
   )
 }
 
-#trivy:ignore:avd-azu-0010
-#trivy:ignore:avd-azu-0012
+#trivy:ignore:avd-azu-0010 // Trusted Microsoft Services should have bypass access to Storage accounts
+#trivy:ignore:avd-azu-0012 // The default action on Storage account network rules should be set to deny
 resource "azurerm_storage_account" "this" {
   name                = local.storage_account_name
   location            = var.location
