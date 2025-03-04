@@ -20,7 +20,7 @@ resource "azurerm_key_vault" "this" {
   tenant_id = data.azurerm_client_config.current.tenant_id
   sku_name  = "standard"
 
-  purge_protection_enabled      = false # TODO: enable on production
+  purge_protection_enabled      = true
   public_network_access_enabled = var.public_network_access
   enable_rbac_authorization     = true
 
