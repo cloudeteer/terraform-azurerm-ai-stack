@@ -107,11 +107,6 @@ resource "azurerm_role_assignment" "ai_service_developer_user_access_administrat
   CONDITION
 }
 
-moved {
-  from = azurerm_role_assignment.ai_service_developer["User Access Administrator"]
-  to   = azurerm_role_assignment.ai_service_developer_user_access_administrator[0]
-}
-
 resource "azurerm_role_assignment" "ai_service_search_service" {
   for_each = var.create_rbac ? toset([
     "Cognitive Services OpenAI Contributor",
