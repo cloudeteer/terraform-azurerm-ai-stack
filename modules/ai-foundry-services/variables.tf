@@ -42,9 +42,28 @@ variable "models" {
     version      = optional(string)
   }))
 
-  # TODO: Add a description that is more specific to the models variable.
-  description = "A map of models to deploy to the workspace."
-  default     = []
+  description = <<-DESCRIPTION
+    A list of models to deploy to the workspace.
+
+    Required parameters:
+
+    Parameter | Description
+    -- | --
+    `name` | The name of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created.
+
+    Optional parameters:
+
+    Parameter | Description
+    -- | --
+    `format` | The format of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created. Possible value is `OpenAI`.
+    `sku_capacity` | Tokens-per-Minute (TPM). The unit of measure for this field is in the thousands of Tokens-per-Minute. Defaults to `1` which means that the limitation is `1000` tokens per minute. If the resources SKU supports scale in/out then the capacity field should be included in the resources' configuration. If the scale in/out is not supported by the resources SKU then this field can be safely omitted. For more information about TPM please see the [product documentation](https://learn.microsoft.com/azure/ai-services/openai/how-to/quota?tabs=rest).
+    `sku_name` | The name of the SKU. Possible values include `Standard`, `DataZoneStandard`, `DataZoneProvisionedManaged`, `GlobalBatch`, `GlobalProvisionedManaged`, `GlobalStandard`, and `ProvisionedManaged`.
+    `version` | The version of Cognitive Services Account Deployment model. If `version` is not specified, the default version of the model at the time will be assigned.
+
+    **Note**: `DataZoneProvisionedManaged`, `GlobalProvisionedManaged`, and `ProvisionedManaged` are purchased on-demand at an hourly basis based on the number of deployed PTUs, with substantial term discount available via the purchase of Azure Reservations. Currently, this step cannot be completed using Terraform. For more details, please refer to the [provisioned throughput onboarding documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/provisioned-throughput-onboarding).
+  DESCRIPTION
+
+  default = []
 }
 
 variable "name" {
