@@ -38,6 +38,12 @@ resource "azurerm_storage_account" "this" {
     default_action = length(var.allowed_ips) > 0 ? "Deny" : "Allow"
     ip_rules       = var.allowed_ips
   }
+
+  blob_properties {
+    delete_retention_policy {
+      days = 7
+    }
+  }
 }
 
 resource "azurerm_role_assignment" "storage_account_ai_developer" {
