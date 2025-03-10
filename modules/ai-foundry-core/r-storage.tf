@@ -40,10 +40,40 @@ resource "azurerm_storage_account" "this" {
   }
 
   blob_properties {
+    cors_rule {
+      allowed_headers = [
+        "*",
+      ]
+      allowed_methods = [
+        "GET",
+        "HEAD",
+        "PUT",
+        "DELETE",
+        "OPTIONS",
+        "POST",
+        "PATCH",
+      ]
+      allowed_origins = [
+        "https://mlworkspace.azure.ai",
+        "https://ml.azure.com",
+        "https://*.ml.azure.com",
+        "https://ai.azure.com",
+        "https://*.ai.azure.com",
+      ]
+      exposed_headers = [
+        "*",
+      ]
+      max_age_in_seconds = 1800
+    }
+
     delete_retention_policy {
       days = 7
     }
   }
+
+
+
+
 }
 
 resource "azurerm_role_assignment" "storage_account_ai_developer" {
