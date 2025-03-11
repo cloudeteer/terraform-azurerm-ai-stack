@@ -74,7 +74,7 @@ Description: The principal ID of a user or group of AI Developers who will have 
 
 Type: `string`
 
-Default: `""`
+Default: `null`
 
 ### <a name="input_allowed_ips"></a> [allowed\_ips](#input\_allowed\_ips)
 
@@ -98,7 +98,7 @@ Description: The description of this workspace.
 
 Type: `string`
 
-Default: `""`
+Default: `null`
 
 ### <a name="input_friendly_name"></a> [friendly\_name](#input\_friendly\_name)
 
@@ -106,7 +106,7 @@ Description: The friendly name for this workspace. This value in mutable.
 
 Type: `string`
 
-Default: `""`
+Default: `null`
 
 ### <a name="input_hub_network_config"></a> [hub\_network\_config](#input\_hub\_network\_config)
 
@@ -136,7 +136,7 @@ Description: Location of the resource group.
 
 Type: `string`
 
-Default: `"eastus"`
+Default: `"swedencentral"`
 
 ### <a name="input_public_network_access"></a> [public\_network\_access](#input\_public\_network\_access)
 

@@ -86,7 +86,7 @@ Description: The principal ID of a user or group of AI Developers who will have 
 
 Type: `string`
 
-Default: `""`
+Default: `null`
 
 ### <a name="input_allowed_ips"></a> [allowed\_ips](#input\_allowed\_ips)
 
@@ -118,7 +118,7 @@ Description: Location of the resource group.
 
 Type: `string`
 
-Default: `"eastus"`
+Default: `"swedencentral"`
 
 ### <a name="input_models"></a> [models](#input\_models)
 

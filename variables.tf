@@ -1,37 +1,33 @@
 variable "ai_developer_principal_id" {
   type        = string
-  default     = ""
   description = "The principal ID of a user or group of AI Developers who will have access to this AI Foundry Hub."
+  default     = null
 }
 
 variable "allowed_ips" {
   type        = list(string)
   description = "List of IP addresses to allow access to the Azure AI service."
   default     = []
-}
-
-variable "location" {
-  type        = string
-  default     = "eastus"
-  description = "Location of the resource group."
+  nullable    = false
 }
 
 variable "create_rbac" {
   type        = bool
-  default     = false
   description = "Create Aure Role Assignments and grant all needed permissions to the `principal_id`."
+  default     = false
+  nullable    = false
 }
 
 variable "description" {
   type        = string
   description = "The description of this workspace."
-  default     = ""
+  default     = null
 }
 
 variable "friendly_name" {
   type        = string
   description = "The friendly name for this workspace. This value in mutable."
-  default     = ""
+  default     = null
 }
 
 variable "hub_network_config" {
@@ -39,8 +35,6 @@ variable "hub_network_config" {
     isolation_mode        = optional(string, "AllowOnlyApprovedOutbound")
     public_network_access = optional(bool, false)
   })
-
-  default = {}
 
   description = <<-DESCRIPTION
     Network configuration for the AI Hub.
@@ -54,12 +48,23 @@ variable "hub_network_config" {
 
     **NOTE**:
   DESCRIPTION
+
+  default  = {}
+  nullable = false
 }
 
 variable "local_authentication_enabled" {
   type        = bool
-  default     = false
   description = "Specifies whether the services allows authentication using local API keys."
+  default     = false
+  nullable    = false
+}
+
+variable "location" {
+  type        = string
+  description = "Location of the resource group."
+  default     = "swedencentral"
+  nullable    = false
 }
 
 variable "models" {
@@ -92,8 +97,10 @@ variable "models" {
     **Note**: `DataZoneProvisionedManaged`, `GlobalProvisionedManaged`, and `ProvisionedManaged` are purchased on-demand at an hourly basis based on the number of deployed PTUs, with substantial term discount available via the purchase of Azure Reservations. Currently, this step cannot be completed using Terraform. For more details, please refer to the [provisioned throughput onboarding documentation](https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/provisioned-throughput-onboarding).
   DESCRIPTION
 
-  default = []
+  default  = []
+  nullable = false
 }
+
 variable "name" {
   type        = string
   description = "The name of the this resource."
@@ -101,8 +108,9 @@ variable "name" {
 
 variable "public_network_access" {
   type        = bool
-  default     = false
   description = "Allow Public Access on AI Services, Storage Account, Key Vault, etc."
+  default     = false
+  nullable    = false
 }
 
 variable "resource_group_name" {
@@ -114,4 +122,5 @@ variable "sku" {
   type        = string
   description = "The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region"
   default     = "S0"
+  nullable    = false
 }

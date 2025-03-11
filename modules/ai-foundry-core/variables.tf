@@ -1,31 +1,33 @@
 variable "ai_developer_principal_id" {
   type        = string
-  default     = ""
   description = "The principal ID of a user or group of AI Developers who will have access to this AI Foundry Hub."
+  default     = null
 }
 
 variable "allowed_ips" {
   type        = list(string)
   description = "List of IP addresses to allow access to the service."
   default     = []
+  nullable    = false
 }
 
 variable "create_rbac" {
   type        = bool
-  default     = false
   description = "Create Aure Role Assignments and grant all needed permissions to the `principal_id`."
+  default     = false
+  nullable    = false
 }
 
 variable "description" {
   type        = string
   description = "The description of this workspace."
-  default     = ""
+  default     = null
 }
 
 variable "friendly_name" {
   type        = string
   description = "The friendly name for this workspace. This value in mutable."
-  default     = ""
+  default     = null
 }
 
 variable "hub_network_config" {
@@ -50,8 +52,9 @@ variable "hub_network_config" {
 
 variable "location" {
   type        = string
-  default     = "eastus"
   description = "Location of the resource group."
+  default     = "swedencentral"
+  nullable    = false
 }
 
 variable "name" {
@@ -61,8 +64,8 @@ variable "name" {
 
 variable "public_network_access" {
   type        = bool
-  default     = false
   description = "Allow Public Access on AI Services, Storage Account, Key Vault, etc."
+  default     = false
 }
 
 variable "resource_group_id" {
