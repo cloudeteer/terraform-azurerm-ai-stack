@@ -26,7 +26,7 @@ variable "hub_id" {
 variable "local_authentication_enabled" {
   type        = bool
   description = "Specifies whether the services allows authentication using local API keys."
-  default     = false
+  default     = true
   nullable    = false
 }
 

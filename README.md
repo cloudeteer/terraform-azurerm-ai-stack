@@ -159,7 +159,7 @@ Description: Specifies whether the services allows authentication using local AP
 
 Type: `bool`
 
-Default: `false`
+Default: `true`
 
 ### <a name="input_location"></a> [location](#input\_location)
 
