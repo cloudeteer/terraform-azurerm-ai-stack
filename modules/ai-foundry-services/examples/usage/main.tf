@@ -1,7 +1,7 @@
 module "ai_foundry_services" {
   source = "cloudeteer/azure-ai-foundry-hub/azurerm//modules/ai-foundry-services"
 
-  name                = var.name
+  name                = var.basename
   location            = var.location
   resource_group_name = var.resource_group_name
 

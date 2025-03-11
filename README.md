@@ -29,7 +29,7 @@ resource "azurerm_resource_group" "example" {
 module "example" {
   source = "cloudeteer/azure-ai-foundry-hub/azurerm"
 
-  name                = trimprefix(azurerm_resource_group.example.name, "rg-")
+  basename            = trimprefix(azurerm_resource_group.example.name, "rg-")
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 
@@ -73,7 +73,7 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_name"></a> [name](#input\_name)
+### <a name="input_basename"></a> [basename](#input\_basename)
 
 Description: The name of the this resource.
 

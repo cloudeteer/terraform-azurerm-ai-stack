@@ -5,12 +5,12 @@ resource "random_string" "identifier" {
 }
 
 resource "azurerm_ai_services" "this" {
-  name                = "ais-${var.name}"
+  name                = "ais-${var.basename}"
   location            = var.location
   resource_group_name = var.resource_group_name
 
   sku_name              = var.sku
-  custom_subdomain_name = "${var.name}-${lower(random_string.identifier.result)}"
+  custom_subdomain_name = "${var.basename}-${lower(random_string.identifier.result)}"
 
   local_authentication_enabled = var.local_authentication_enabled
 
@@ -29,7 +29,7 @@ resource "azurerm_ai_services" "this" {
 
 resource "azapi_resource" "ai_services_connection" {
   type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-10-01-preview"
-  name      = "aisc-${var.name}"
+  name      = "aisc-${var.basename}"
   parent_id = var.hub_id
 
   body = {

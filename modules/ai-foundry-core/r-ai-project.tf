@@ -1,6 +1,6 @@
 resource "azapi_resource" "project" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-10-01-preview"
-  name      = "proj-${var.name}"
+  name      = "proj-${var.basename}"
   location  = var.location
   parent_id = var.resource_group_id
 

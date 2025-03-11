@@ -101,7 +101,7 @@ variable "models" {
   nullable = false
 }
 
-variable "name" {
+variable "basename" {
   type        = string
   description = "The name of the this resource."
 }

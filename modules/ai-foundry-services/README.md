@@ -7,7 +7,7 @@ This example demonstrates the usage of this Terraform module with default settin
 module "ai_foundry_services" {
   source = "cloudeteer/azure-ai-foundry-hub/azurerm//modules/ai-foundry-services"
 
-  name                = var.name
+  name                = var.basename
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -52,15 +52,15 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_hub_id"></a> [hub\_id](#input\_hub\_id)
+### <a name="input_basename"></a> [basename](#input\_basename)
 
-Description: The ID of the Azure AI hub.
+Description: The name of the this resource.
 
 Type: `string`
 
-### <a name="input_name"></a> [name](#input\_name)
+### <a name="input_hub_id"></a> [hub\_id](#input\_hub\_id)
 
-Description: The name of the this resource.
+Description: The ID of the Azure AI hub.
 
 Type: `string`
 

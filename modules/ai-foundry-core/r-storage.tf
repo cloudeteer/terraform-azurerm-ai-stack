@@ -3,7 +3,7 @@ locals {
     "st%s%s",
     lower(
       substr(
-        replace(var.name, "-", ""), 0, 24 - 2 - local.random_string_length
+        replace(var.basename, "-", ""), 0, 24 - 2 - local.random_string_length
       )
     ),
     random_string.suffix.result

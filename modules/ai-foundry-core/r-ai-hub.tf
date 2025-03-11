@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "developer" {
-  name     = format("rg-%s_developer", var.name)
+  name     = format("rg-%s_developer", var.basename)
   location = var.location
 }
 
@@ -15,7 +15,7 @@ resource "azurerm_role_assignment" "rg_developer_ai_developer" {
 
 resource "azapi_resource" "hub" {
   type      = "Microsoft.MachineLearningServices/workspaces@2024-10-01-preview"
-  name      = "hub-${var.name}"
+  name      = "hub-${var.basename}"
   location  = var.location
   parent_id = var.resource_group_id
 

@@ -5,7 +5,7 @@ locals {
 module "ai_foundry_core" {
   source = "./modules/ai-foundry-core"
 
-  name                = var.name
+  basename            = var.basename
   location            = var.location
   resource_group_id   = local.resource_group_id
   resource_group_name = var.resource_group_name
@@ -22,7 +22,7 @@ module "ai_foundry_core" {
 module "ai_foundry_services" {
   source = "./modules/ai-foundry-services"
 
-  name                = var.name
+  basename            = var.basename
   location            = var.location
   resource_group_name = var.resource_group_name
 
