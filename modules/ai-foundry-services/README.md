@@ -84,6 +84,19 @@ The following input variables are optional (have default values):
 
 Description: The principal ID of a user or group of AI Developers who will have access to this AI Foundry Hub.
 
+The following roles will be assigned to the given principal ID:
+
+Role | Scope
+-- | --
+Cognitive Services Contributor | AI Service
+Cognitive Services OpenAI Contributor | AI Service
+Cognitive Services User | AI Service
+User Access Administrator | AI Service
+Search Index Data Contributor | AI Search Service
+Search Service Contributor | AI Search Service
+
+**NOTE**: The `User Access Administrator` role is assigned with the condition that only the `Cognitive Services OpenAI User` role can be assigned to user principals. This is necessary to successfully deploy a Web App on top of an AI Model through the AI Foundry Hub.
+
 Type: `string`
 
 Default: `null`
@@ -98,11 +111,21 @@ Default: `[]`
 
 ### <a name="input_create_rbac"></a> [create\_rbac](#input\_create\_rbac)
 
-Description: Create Aure Role Assignments and grant all needed permissions to the `principal_id`.
+Description: If set to `true` (default), the following mandatory Azure role assignments will be created automatically:
+
+Role | Scope | Principal
+-- | -- | --
+Cognitive Services OpenAI Contributor | AI Service | AI Search Service Identity
+Search Index Data Reader | AI Search Service | AI Service Identity
+Search Service Contributor | AI Search Service | AI Service Identity
+Storage Blob Data Contributor | Storage Account (AI Foundry Hub) | AI Service Identity
+Storage Blob Data Reader | Storage Account (AI Foundry Hub) | AI Search Service Identity
+
+**NOTE**: If set to `false`, these role assignments must be created manually to ensure the AI Foundry Hub Project functions correctly.
 
 Type: `bool`
 
-Default: `false`
+Default: `true`
 
 ### <a name="input_local_authentication_enabled"></a> [local\_authentication\_enabled](#input\_local\_authentication\_enabled)
 

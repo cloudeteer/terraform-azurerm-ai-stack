@@ -72,6 +72,16 @@ The following input variables are optional (have default values):
 
 Description: The principal ID of a user or group of AI Developers who will have access to this AI Foundry Hub.
 
+The following roles will be assigned to the given principal ID:
+
+Role | Scope
+-- | --
+Azure AI Developer | AI Foundry Hub
+Azure AI Developer | AI Foundry Project
+Contributor | Developer Resource Group
+Storage Blob Data Contributor | Storage Account
+Storage File Data Privileged Contributor | Storage Account
+
 Type: `string`
 
 Default: `null`
@@ -83,14 +93,6 @@ Description: List of IP addresses to allow access to the service.
 Type: `list(string)`
 
 Default: `[]`
-
-### <a name="input_create_rbac"></a> [create\_rbac](#input\_create\_rbac)
-
-Description: Create Aure Role Assignments and grant all needed permissions to the `principal_id`.
-
-Type: `bool`
-
-Default: `false`
 
 ### <a name="input_description"></a> [description](#input\_description)
 

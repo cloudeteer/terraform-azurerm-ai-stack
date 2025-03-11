@@ -64,11 +64,11 @@ resource "azapi_resource" "ai_services_outbound_rule_hub" {
 }
 
 resource "azurerm_role_assignment" "ai_service_developer" {
-  for_each = var.create_rbac ? toset([
+  for_each = var.ai_developer_principal_id == null ? [] : toset([
     "Cognitive Services Contributor",
     "Cognitive Services OpenAI Contributor",
     "Cognitive Services User",
-  ]) : []
+  ])
 
   principal_id         = var.ai_developer_principal_id
   role_definition_name = each.value
@@ -76,7 +76,7 @@ resource "azurerm_role_assignment" "ai_service_developer" {
 }
 
 resource "azurerm_role_assignment" "ai_service_developer_user_access_administrator" {
-  count = var.create_rbac ? 1 : 0
+  count = var.ai_developer_principal_id == null ? 0 : 1
 
   description          = "This role assignment is needed to deploy web apps from ai.azure.com"
   principal_id         = var.ai_developer_principal_id

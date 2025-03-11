@@ -1,20 +1,27 @@
 variable "ai_developer_principal_id" {
-  type        = string
-  description = "The principal ID of a user or group of AI Developers who will have access to this AI Foundry Hub."
-  default     = null
+  type = string
+
+  description = <<-DESCRIPTION
+    The principal ID of a user or group of AI Developers who will have access to this AI Foundry Hub.
+
+    The following roles will be assigned to the given principal ID:
+
+    Role | Scope
+    -- | --
+    Azure AI Developer | AI Foundry Hub
+    Azure AI Developer | AI Foundry Project
+    Contributor | Developer Resource Group
+    Storage Blob Data Contributor | Storage Account
+    Storage File Data Privileged Contributor | Storage Account
+  DESCRIPTION
+
+  default = null
 }
 
 variable "allowed_ips" {
   type        = list(string)
   description = "List of IP addresses to allow access to the service."
   default     = []
-  nullable    = false
-}
-
-variable "create_rbac" {
-  type        = bool
-  description = "Create Aure Role Assignments and grant all needed permissions to the `principal_id`."
-  default     = false
   nullable    = false
 }
 

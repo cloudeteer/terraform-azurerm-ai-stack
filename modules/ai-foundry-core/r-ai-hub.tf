@@ -4,9 +4,9 @@ resource "azurerm_resource_group" "developer" {
 }
 
 resource "azurerm_role_assignment" "rg_developer_ai_developer" {
-  for_each = var.create_rbac ? toset([
+  for_each = var.ai_developer_principal_id == null ? [] : toset([
     "Contributor",
-  ]) : []
+  ])
 
   principal_id         = var.ai_developer_principal_id
   role_definition_name = each.value
@@ -59,9 +59,9 @@ resource "azapi_resource" "hub" {
 }
 
 resource "azurerm_role_assignment" "hub_ai_developer" {
-  for_each = var.create_rbac ? toset([
+  for_each = var.ai_developer_principal_id == null ? [] : toset([
     "Azure AI Developer",
-  ]) : []
+  ])
 
   principal_id         = var.ai_developer_principal_id
   role_definition_name = each.value

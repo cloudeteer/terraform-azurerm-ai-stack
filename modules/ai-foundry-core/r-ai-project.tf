@@ -20,9 +20,9 @@ resource "azapi_resource" "project" {
 }
 
 resource "azurerm_role_assignment" "project" {
-  for_each = var.create_rbac ? toset([
+  for_each = var.ai_developer_principal_id == null ? [] : toset([
     "Azure AI Developer",
-  ]) : []
+  ])
 
   scope                = azapi_resource.project.output.id
   role_definition_name = each.value

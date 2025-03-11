@@ -12,7 +12,6 @@ module "ai_foundry_core" {
 
   ai_developer_principal_id = var.ai_developer_principal_id
   allowed_ips               = var.allowed_ips
-  create_rbac               = var.create_rbac
   description               = var.description
   friendly_name             = var.friendly_name
   hub_network_config        = var.hub_network_config
