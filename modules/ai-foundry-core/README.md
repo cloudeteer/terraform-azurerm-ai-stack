@@ -74,13 +74,13 @@ Description: The principal ID of a user or group of AI Developers who will have 
 
 The following roles will be assigned to the given principal ID:
 
-Role | Scope
--- | --
-Azure AI Developer | AI Foundry Hub
-Azure AI Developer | AI Foundry Project
-Contributor | Developer Resource Group
-Storage Blob Data Contributor | Storage Account
-Storage File Data Privileged Contributor | Storage Account
+| Role | Scope |
+| -- | -- |
+| Azure AI Developer | AI Foundry Hub |
+| Azure AI Developer | AI Foundry Project |
+| Contributor | Developer Resource Group |
+| Storage Blob Data Contributor | Storage Account |
+| Storage File Data Privileged Contributor | Storage Account |
 
 Type: `string`
 
