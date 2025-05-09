@@ -37,7 +37,7 @@ repos:
 
       - id: terraform_tflint
         alias: terraform_tflint_tests
-        name: Trraform validate tests with tflint
+        name: Terraform validate tests with tflint
         files: ^tests/
         args:
           - --args=--config=__GIT_WORKING_DIR__/.tflint.tests.hcl
