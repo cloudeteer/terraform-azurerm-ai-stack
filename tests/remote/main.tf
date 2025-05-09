@@ -15,7 +15,7 @@ resource "azurerm_resource_group" "tftest" {
 module "tftest" {
   source = "../.."
 
-  name                = trimprefix(azurerm_resource_group.tftest.name, "rg-")
+  basename            = trimprefix(azurerm_resource_group.tftest.name, "rg-")
   location            = azurerm_resource_group.tftest.location
   resource_group_name = azurerm_resource_group.tftest.name
 }
