@@ -12,6 +12,21 @@ output "hub_management_url" {
   )
 }
 
+output "hub_principal_id" {
+  value       = one(azapi_resource.hub.identity[*].principal_id)
+  description = "The principal ID of the managed identity assigned to the Azure Foundry Hub"
+}
+
+output "key_vault_id" {
+  value       = azurerm_key_vault.this.id
+  description = "The Azure Key Vault ID"
+}
+
+output "project_id" {
+  value       = azapi_resource.project.id
+  description = "The Azure Foundry Project ID"
+}
+
 output "project_management_url" {
   description = "The management URL for the AI Foundry Project on the Azure AI platform"
   value = format(
@@ -19,6 +34,11 @@ output "project_management_url" {
     urlencode(azapi_resource.project.output.id),
     urlencode(data.azurerm_client_config.current.tenant_id)
   )
+}
+
+output "project_principal_id" {
+  value       = one(azapi_resource.project.identity[*].principal_id)
+  description = "The principal ID of the managed identity assigned to the Azure Foundry Project"
 }
 
 output "project_url" {

@@ -25,6 +25,11 @@ variable "allowed_ips" {
   nullable    = false
 }
 
+variable "basename" {
+  type        = string
+  description = "The name of the this resource."
+}
+
 variable "description" {
   type        = string
   description = "The description of this workspace."
@@ -62,11 +67,6 @@ variable "location" {
   description = "Location of the resource group."
   default     = "swedencentral"
   nullable    = false
-}
-
-variable "basename" {
-  type        = string
-  description = "The name of the this resource."
 }
 
 variable "public_network_access" {

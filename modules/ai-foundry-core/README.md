@@ -160,9 +160,25 @@ Description: The Azure Foundry Hub ID
 
 Description: The management URL for the AI Foundry Hub on the Azure AI platform
 
+### <a name="output_hub_principal_id"></a> [hub\_principal\_id](#output\_hub\_principal\_id)
+
+Description: The principal ID of the managed identity assigned to the Azure Foundry Hub
+
+### <a name="output_key_vault_id"></a> [key\_vault\_id](#output\_key\_vault\_id)
+
+Description: The Azure Key Vault ID
+
+### <a name="output_project_id"></a> [project\_id](#output\_project\_id)
+
+Description: The Azure Foundry Project ID
+
 ### <a name="output_project_management_url"></a> [project\_management\_url](#output\_project\_management\_url)
 
 Description: The management URL for the AI Foundry Project on the Azure AI platform
+
+### <a name="output_project_principal_id"></a> [project\_principal\_id](#output\_project\_principal\_id)
+
+Description: The principal ID of the managed identity assigned to the Azure Foundry Project
 
 ### <a name="output_project_url"></a> [project\_url](#output\_project\_url)
 
