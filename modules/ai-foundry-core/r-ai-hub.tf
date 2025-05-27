@@ -25,7 +25,7 @@ resource "azapi_resource" "hub" {
 
   body = {
     properties = {
-      description  = var.description
+      description  = var.description != null ? var.description : ""
       friendlyName = coalesce(var.friendly_name, "AI Hub")
 
       workspaceHubConfig = {

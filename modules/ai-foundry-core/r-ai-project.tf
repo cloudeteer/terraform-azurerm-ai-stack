@@ -12,7 +12,7 @@ resource "azapi_resource" "project" {
     kind = "Project"
 
     properties = {
-      description   = var.description
+      description   = var.description != null ? var.description : ""
       friendlyName  = coalesce(var.friendly_name, "AI Project")
       hubResourceId = azapi_resource.hub.id
     }
