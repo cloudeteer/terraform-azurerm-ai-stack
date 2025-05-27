@@ -48,7 +48,7 @@ The following input variables are required:
 
 ### <a name="input_basename"></a> [basename](#input\_basename)
 
-Description: The name of the this resource.
+Description: The basename of all resources deployed by this module
 
 Type: `string`
 

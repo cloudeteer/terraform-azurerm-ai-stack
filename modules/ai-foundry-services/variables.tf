@@ -106,7 +106,7 @@ variable "models" {
 
 variable "basename" {
   type        = string
-  description = "The name of the this resource."
+  description = "The basename of all resources deployed by this module"
 }
 
 variable "resource_group_name" {
