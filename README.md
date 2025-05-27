@@ -217,6 +217,7 @@ Optional parameters:
 
 Parameter | Description
 -- | --
+`deployment_name` | The name to assign to the model deployment. If not specified, the value of `name` will be used by default. This property allows you to customize the deployment resource name independently from the model name.
 `format` | The format of the Cognitive Services Account Deployment model. Changing this forces a new resource to be created. Possible value is `OpenAI`.
 `sku_capacity` | Tokens-per-Minute (TPM). The unit of measure for this field is in the thousands of Tokens-per-Minute. Defaults to `1` which means that the limitation is `1000` tokens per minute. If the resources SKU supports scale in/out then the capacity field should be included in the resources' configuration. If the scale in/out is not supported by the resources SKU then this field can be safely omitted. For more information about TPM please see the [product documentation](https://learn.microsoft.com/azure/ai-services/openai/how-to/quota?tabs=rest).
 `sku_name` | The name of the SKU. Possible values include `Standard`, `DataZoneStandard`, `DataZoneProvisionedManaged`, `GlobalBatch`, `GlobalProvisionedManaged`, `GlobalStandard`, and `ProvisionedManaged`.
@@ -228,11 +229,12 @@ Type:
 
 ```hcl
 list(object({
-    name         = string
-    format       = optional(string)
-    sku_capacity = optional(number)
-    sku_name     = optional(string)
-    version      = optional(string)
+    name            = string
+    deployment_name = optional(string)
+    format          = optional(string)
+    sku_capacity    = optional(number)
+    sku_name        = optional(string)
+    version         = optional(string)
   }))
 ```
 
