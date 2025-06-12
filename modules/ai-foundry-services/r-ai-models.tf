@@ -14,6 +14,13 @@ locals {
       sku_name     = "GlobalStandard"
       version      = "2024-11-20"
     },
+    {
+      name         = "text-embedding-ada-002"
+      format       = "OpenAI"
+      sku_capacity = 10
+      sku_name     = "Standard"
+      version      = "2"
+    },
   ]
 
   models = {
