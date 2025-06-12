@@ -5,15 +5,15 @@ locals {
       format       = "OpenAI"
       sku_capacity = 10
       sku_name     = "GlobalStandard"
-      version      = "2024-07-18"
+      version      = "2024-11-20"
     },
     {
       name         = "gpt-4o"
       format       = "OpenAI"
       sku_capacity = 10
       sku_name     = "GlobalStandard"
-      version      = "2024-07-18"
-    }
+      version      = "2024-11-20"
+    },
   ]
 
   models = {
