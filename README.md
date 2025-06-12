@@ -299,6 +299,18 @@ Description: The principal ID of the managed identity assigned to the Azure Foun
 ### <a name="output_project_url"></a> [project\_url](#output\_project\_url)
 
 Description: The URL to access the AI Foundry Project on the Azure AI platform
+
+### <a name="output_search_service_id"></a> [search\_service\_id](#output\_search\_service\_id)
+
+Description: The ID of the AI service
+
+### <a name="output_search_service_name"></a> [search\_service\_name](#output\_search\_service\_name)
+
+Description: The name of the AI service
+
+### <a name="output_search_service_principal_id"></a> [search\_service\_principal\_id](#output\_search\_service\_principal\_id)
+
+Description: The principal ID of the managed identity assigned to the Azure AI Search Service
 <!-- END_TF_DOCS -->
 
 ## Contributions

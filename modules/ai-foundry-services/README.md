@@ -199,4 +199,16 @@ Description: The endpoint of the AI service
 ### <a name="output_ai_service_id"></a> [ai\_service\_id](#output\_ai\_service\_id)
 
 Description: The ID of the AI service
+
+### <a name="output_search_service_id"></a> [search\_service\_id](#output\_search\_service\_id)
+
+Description: The ID of the AI service
+
+### <a name="output_search_service_name"></a> [search\_service\_name](#output\_search\_service\_name)
+
+Description: The name of the AI service
+
+### <a name="output_search_service_principal_id"></a> [search\_service\_principal\_id](#output\_search\_service\_principal\_id)
+
+Description: The principal ID of the managed identity assigned to the Azure AI Search Service
 <!-- END_TF_DOCS -->
