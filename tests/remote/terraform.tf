@@ -12,7 +12,7 @@ terraform {
     }
     azapi = {
       source  = "azure/azapi"
-      version = "2.0.1" # there is no version 2.0.0
+      version = "2.1.0" # there is no version 2.0.0
     }
 
     # This provider is required for the remote test execution, not by the module itself
