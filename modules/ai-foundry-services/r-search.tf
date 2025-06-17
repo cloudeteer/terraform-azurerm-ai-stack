@@ -35,6 +35,11 @@ resource "azapi_resource" "search_service_connection_hub" {
       }
     }
   }
+
+  # Explicit dependency: Creating the connection resource in parallel with the outbound rule can cause intermittent
+  # 'InternalServerError' or 'ServiceError' responses from the Azure API. Adding this dependency ensures the outbound
+  # rule is fully provisioned before the connection is created, preventing these errors.
+  depends_on = [azapi_resource.search_service_outbound_rule_hub]
 }
 
 resource "azapi_resource" "search_service_outbound_rule_hub" {
