@@ -29,7 +29,7 @@ resource "azapi_resource" "ai_services_connection_search_service" {
       isSharedToAll = true,
       metadata = {
         ApiType    = "Azure",
-        ResourceId = azurerm_ai_services.this.id
+        ResourceId = azurerm_search_service.this.id
       }
     }
   }
