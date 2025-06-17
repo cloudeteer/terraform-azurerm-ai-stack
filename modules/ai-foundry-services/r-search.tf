@@ -16,10 +16,12 @@ resource "azurerm_search_service" "this" {
   }
 }
 
-resource "azapi_resource" "ai_services_connection_search_service" {
+resource "azapi_resource" "search_service_connection_hub" {
   type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-10-01-preview"
   name      = azurerm_search_service.this.name
   parent_id = var.hub_id
+
+  response_export_values = ["*"]
 
   body = {
     properties = {
@@ -33,13 +35,14 @@ resource "azapi_resource" "ai_services_connection_search_service" {
       }
     }
   }
-  response_export_values = ["*"]
 }
 
 resource "azapi_resource" "search_service_outbound_rule_hub" {
   type      = "Microsoft.MachineLearningServices/workspaces/outboundRules@2024-10-01-preview"
   name      = "pe-${azurerm_search_service.this.name}"
   parent_id = var.hub_id
+
+  response_export_values = ["*"]
 
   body = {
     properties = {

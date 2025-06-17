@@ -27,10 +27,12 @@ resource "azurerm_ai_services" "this" {
   }
 }
 
-resource "azapi_resource" "ai_services_connection" {
+resource "azapi_resource" "ai_services_connection_hub" {
   type      = "Microsoft.MachineLearningServices/workspaces/connections@2024-10-01-preview"
   name      = "aisc-${var.basename}"
   parent_id = var.hub_id
+
+  response_export_values = ["*"]
 
   body = {
     properties = {
@@ -44,13 +46,14 @@ resource "azapi_resource" "ai_services_connection" {
       }
     }
   }
-  response_export_values = ["*"]
 }
 
 resource "azapi_resource" "ai_services_outbound_rule_hub" {
   type      = "Microsoft.MachineLearningServices/workspaces/outboundRules@2024-10-01-preview"
   name      = "pe-${azurerm_ai_services.this.name}"
   parent_id = var.hub_id
+
+  response_export_values = ["*"]
 
   body = {
     properties = {
