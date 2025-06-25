@@ -1,6 +1,21 @@
-# specify dependencies for remote module tests here
-resource "random_pet" "this" {}
+resource "random_string" "tftest" {
+  length  = 3
+  special = false
+  upper   = false
+}
 
-output "random_pet" {
-  value = random_pet.this.id
+resource "azurerm_resource_group" "tftest" {
+  name     = "rg-tftest-dev-euw-${random_string.tftest.result}"
+  location = "westeurope"
+  tags = {
+    terraform-module = "terraform-azurerm-vm"
+  }
+}
+
+module "tftest" {
+  source = "../.."
+
+  basename            = trimprefix(azurerm_resource_group.tftest.name, "rg-")
+  location            = azurerm_resource_group.tftest.location
+  resource_group_name = azurerm_resource_group.tftest.name
 }

@@ -8,22 +8,12 @@ variable "ai_developer_principal_id" {
 
     | Role | Scope |
     | -- | -- |
-    | Azure AI Developer | AI Foundry Hub |
-    | Azure AI Developer | AI Foundry Project |
-    | Contributor | Developer Resource Group |
-    | Storage Blob Data Contributor | Storage Account |
-    | Storage File Data Privileged Contributor | Storage Account |
     | Cognitive Services Contributor | AI Service |
     | Cognitive Services OpenAI Contributor | AI Service |
     | Cognitive Services User | AI Service |
     | User Access Administrator | AI Service |
     | Search Index Data Contributor | AI Search Service |
     | Search Service Contributor | AI Search Service |
-
-    Argument | Description
-    -- | --
-    `isolation_mode` | Isolation mode for the managed network of a machine learning workspace. Possible values are `AllowOnlyApprovedOutbound`, `AllowInternetOutbound`, or `Disabled`.
-    `public_network_access` | Whether requests from Public Network are allowed.
 
     **NOTE**: The `User Access Administrator` role is assigned with the condition that only the `Cognitive Services OpenAI User` role can be assigned to user principals. This is necessary to successfully deploy a Web App on top of an AI Model through the AI Foundry Hub.
   DESCRIPTION
@@ -33,29 +23,24 @@ variable "ai_developer_principal_id" {
 
 variable "allowed_ips" {
   type        = list(string)
-  description = "List of IP addresses to allow access to the Azure AI service."
+  description = "List of IP addresses to allow access to the service."
   default     = []
   nullable    = false
-}
-
-variable "basename" {
-  type        = string
-  description = "The basename of all resources deployed by this module"
 }
 
 variable "create_rbac" {
   type = bool
 
   description = <<-DESCRIPTION
-    If set to `true` (default), the following mandatory Azure role assignments will be created:
+    If set to `true` (default), the following mandatory Azure role assignments will be created automatically:
 
     | Role | Scope | Principal |
     | -- | -- | -- |
     | Cognitive Services OpenAI Contributor | AI Service | AI Search Service Identity |
     | Search Index Data Reader | AI Search Service | AI Service Identity |
     | Search Service Contributor | AI Search Service | AI Service Identity |
-    | Storage Blob Data Contributor | Storage Account | AI Service Identity |
-    | Storage Blob Data Reader | Storage Account | AI Search Service Identity |
+    | Storage Blob Data Contributor | Storage Account (AI Foundry Hub) | AI Service Identity |
+    | Storage Blob Data Reader | Storage Account (AI Foundry Hub) | AI Search Service Identity |
 
     **NOTE**: If set to `false`, these role assignments must be created manually to ensure the AI Foundry Hub Project functions correctly.
   DESCRIPTION
@@ -64,39 +49,9 @@ variable "create_rbac" {
   nullable = false
 }
 
-variable "description" {
+variable "hub_id" {
   type        = string
-  description = "The description of this workspace."
-  default     = null
-}
-
-variable "friendly_name" {
-  type        = string
-  description = "The friendly name for this workspace. This value in mutable."
-  default     = null
-}
-
-variable "hub_network_config" {
-  type = object({
-    isolation_mode        = optional(string, "AllowOnlyApprovedOutbound")
-    public_network_access = optional(bool, false)
-  })
-
-  description = <<-DESCRIPTION
-    Network configuration for the AI Hub.
-
-    Optional arguments:
-
-    Argument | Description
-    -- | --
-    `isolation_mode` | Isolation mode for the managed network of a machine learning workspace. Possible values are `AllowOnlyApprovedOutbound`, `AllowInternetOutbound`, or `Disabled`.
-    `public_network_access` | Whether requests from Public Network are allowed.
-
-    **NOTE**:
-  DESCRIPTION
-
-  default  = {}
-  nullable = false
+  description = "The ID of the Azure AI hub."
 }
 
 variable "local_authentication_enabled" {
@@ -149,11 +104,9 @@ variable "models" {
   nullable = false
 }
 
-variable "public_network_access" {
-  type        = bool
-  description = "Allow Public Access on AI Services, Storage Account, Key Vault, etc."
-  default     = false
-  nullable    = false
+variable "basename" {
+  type        = string
+  description = "The basename of all resources deployed by this module"
 }
 
 variable "resource_group_name" {
@@ -166,4 +119,9 @@ variable "sku" {
   description = "The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region"
   default     = "S0"
   nullable    = false
+}
+
+variable "storage_account_id" {
+  type        = string
+  description = "The ID of the Azure Storage Account."
 }

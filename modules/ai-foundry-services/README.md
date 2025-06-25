@@ -1,44 +1,18 @@
-<!-- markdownlint-disable first-line-h1 no-inline-html -->
-
-> [!NOTE]
-> This repository is publicly accessible as part of our open-source initiative. We welcome contributions from the community alongside our organization's primary development efforts.
-
----
-
-# terraform-module-template
-
-[![SemVer](https://img.shields.io/badge/SemVer-2.0.0-blue.svg)](https://github.com/cloudeteer/terraform-module-template/releases)
-
-Terraform Module Template
-
 <!-- BEGIN_TF_DOCS -->
 ## Usage
 
 This example demonstrates the usage of this Terraform module with default settings.
 
 ```hcl
-data "http" "my_current_public_ip" { url = "https://ipv4.icanhazip.com" }
+module "ai_foundry_services" {
+  source = "cloudeteer/azure-ai-foundry-hub/azurerm//modules/ai-foundry-services"
 
-resource "azurerm_resource_group" "example" {
-  location = "swedencentral"
-  name     = "rg-example-dev-swec-01"
-}
+  name                = var.basename
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
-module "example" {
-  source = "cloudeteer/azure-ai-foundry-hub/azurerm"
-
-  basename            = trimprefix(azurerm_resource_group.example.name, "rg-")
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
-
-  public_network_access = true
-  allowed_ips           = [chomp(data.http.my_current_public_ip.response_body)]
-
-  # Enables the creation of role assignments for AI Services to interact via
-  # Entra ID (Managed Identities). Requires the user to have at least the
-  # Owner role on the resource group. If disabled, role assignments must be
-  # created manually. See the 'create_rbac' input variable for details.
-  # create_rbac = true # (default)
+  sku    = var.sku
+  hub_id = module.ai_foundry_core.hub_id
 }
 ```
 
@@ -46,29 +20,33 @@ module "example" {
 
 The following providers are used by this module:
 
+- <a name="provider_azapi"></a> [azapi](#provider\_azapi) ( >= 2.0)
+
 - <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (>= 4.14)
 
-## Modules
+- <a name="provider_random"></a> [random](#provider\_random) ( >= 3.6)
 
-The following Modules are called:
 
-### <a name="module_ai_foundry_core"></a> [ai\_foundry\_core](#module\_ai\_foundry\_core)
-
-Source: ./modules/ai-foundry-core
-
-Version:
-
-### <a name="module_ai_foundry_services"></a> [ai\_foundry\_services](#module\_ai\_foundry\_services)
-
-Source: ./modules/ai-foundry-services
-
-Version:
 
 ## Resources
 
 The following resources are used by this module:
 
-- [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
+- [azapi_resource.ai_services_connection_hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azapi_resource.ai_services_outbound_rule_hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azapi_resource.search_service_connection_hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azapi_resource.search_service_outbound_rule_hub](https://registry.terraform.io/providers/azure/azapi/latest/docs/resources/resource) (resource)
+- [azurerm_ai_services.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/ai_services) (resource)
+- [azurerm_cognitive_deployment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/cognitive_deployment) (resource)
+- [azurerm_role_assignment.ai_service_developer](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_role_assignment.ai_service_developer_user_access_administrator](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_role_assignment.ai_service_search_service](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_role_assignment.search_service_ai_developer](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_role_assignment.search_service_ai_service](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_role_assignment.storage_account_ai_service](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_role_assignment.storage_account_search_service](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
+- [azurerm_search_service.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service) (resource)
+- [random_string.identifier](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) (resource)
 
 ## Required Inputs
 
@@ -80,9 +58,21 @@ Description: The basename of all resources deployed by this module
 
 Type: `string`
 
+### <a name="input_hub_id"></a> [hub\_id](#input\_hub\_id)
+
+Description: The ID of the Azure AI hub.
+
+Type: `string`
+
 ### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
 
 Description: The resource group where the resources will be deployed.
+
+Type: `string`
+
+### <a name="input_storage_account_id"></a> [storage\_account\_id](#input\_storage\_account\_id)
+
+Description: The ID of the Azure Storage Account.
 
 Type: `string`
 
@@ -98,22 +88,12 @@ The following roles will be assigned to the given principal ID:
 
 | Role | Scope |
 | -- | -- |
-| Azure AI Developer | AI Foundry Hub |
-| Azure AI Developer | AI Foundry Project |
-| Contributor | Developer Resource Group |
-| Storage Blob Data Contributor | Storage Account |
-| Storage File Data Privileged Contributor | Storage Account |
 | Cognitive Services Contributor | AI Service |
 | Cognitive Services OpenAI Contributor | AI Service |
 | Cognitive Services User | AI Service |
 | User Access Administrator | AI Service |
 | Search Index Data Contributor | AI Search Service |
 | Search Service Contributor | AI Search Service |
-
-Argument | Description
--- | --
-`isolation_mode` | Isolation mode for the managed network of a machine learning workspace. Possible values are `AllowOnlyApprovedOutbound`, `AllowInternetOutbound`, or `Disabled`.
-`public_network_access` | Whether requests from Public Network are allowed.
 
 **NOTE**: The `User Access Administrator` role is assigned with the condition that only the `Cognitive Services OpenAI User` role can be assigned to user principals. This is necessary to successfully deploy a Web App on top of an AI Model through the AI Foundry Hub.
 
@@ -123,7 +103,7 @@ Default: `null`
 
 ### <a name="input_allowed_ips"></a> [allowed\_ips](#input\_allowed\_ips)
 
-Description: List of IP addresses to allow access to the Azure AI service.
+Description: List of IP addresses to allow access to the service.
 
 Type: `list(string)`
 
@@ -131,61 +111,21 @@ Default: `[]`
 
 ### <a name="input_create_rbac"></a> [create\_rbac](#input\_create\_rbac)
 
-Description: If set to `true` (default), the following mandatory Azure role assignments will be created:
+Description: If set to `true` (default), the following mandatory Azure role assignments will be created automatically:
 
 | Role | Scope | Principal |
 | -- | -- | -- |
 | Cognitive Services OpenAI Contributor | AI Service | AI Search Service Identity |
 | Search Index Data Reader | AI Search Service | AI Service Identity |
 | Search Service Contributor | AI Search Service | AI Service Identity |
-| Storage Blob Data Contributor | Storage Account | AI Service Identity |
-| Storage Blob Data Reader | Storage Account | AI Search Service Identity |
+| Storage Blob Data Contributor | Storage Account (AI Foundry Hub) | AI Service Identity |
+| Storage Blob Data Reader | Storage Account (AI Foundry Hub) | AI Search Service Identity |
 
 **NOTE**: If set to `false`, these role assignments must be created manually to ensure the AI Foundry Hub Project functions correctly.
 
 Type: `bool`
 
 Default: `true`
-
-### <a name="input_description"></a> [description](#input\_description)
-
-Description: The description of this workspace.
-
-Type: `string`
-
-Default: `null`
-
-### <a name="input_friendly_name"></a> [friendly\_name](#input\_friendly\_name)
-
-Description: The friendly name for this workspace. This value in mutable.
-
-Type: `string`
-
-Default: `null`
-
-### <a name="input_hub_network_config"></a> [hub\_network\_config](#input\_hub\_network\_config)
-
-Description: Network configuration for the AI Hub.
-
-Optional arguments:
-
-Argument | Description
--- | --
-`isolation_mode` | Isolation mode for the managed network of a machine learning workspace. Possible values are `AllowOnlyApprovedOutbound`, `AllowInternetOutbound`, or `Disabled`.
-`public_network_access` | Whether requests from Public Network are allowed.
-
-**NOTE**:
-
-Type:
-
-```hcl
-object({
-    isolation_mode        = optional(string, "AllowOnlyApprovedOutbound")
-    public_network_access = optional(bool, false)
-  })
-```
-
-Default: `{}`
 
 ### <a name="input_local_authentication_enabled"></a> [local\_authentication\_enabled](#input\_local\_authentication\_enabled)
 
@@ -240,14 +180,6 @@ list(object({
 
 Default: `[]`
 
-### <a name="input_public_network_access"></a> [public\_network\_access](#input\_public\_network\_access)
-
-Description: Allow Public Access on AI Services, Storage Account, Key Vault, etc.
-
-Type: `bool`
-
-Default: `false`
-
 ### <a name="input_sku"></a> [sku](#input\_sku)
 
 Description: The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region
@@ -268,38 +200,6 @@ Description: The endpoint of the AI service
 
 Description: The ID of the AI service
 
-### <a name="output_hub_id"></a> [hub\_id](#output\_hub\_id)
-
-Description: The Azure Foundry Hub ID
-
-### <a name="output_hub_management_url"></a> [hub\_management\_url](#output\_hub\_management\_url)
-
-Description: The management URL for the AI Foundry Hub on the Azure AI platform
-
-### <a name="output_hub_principal_id"></a> [hub\_principal\_id](#output\_hub\_principal\_id)
-
-Description: The principal ID of the managed identity assigned to the Azure Foundry Hub
-
-### <a name="output_key_vault_id"></a> [key\_vault\_id](#output\_key\_vault\_id)
-
-Description: The Azure Key Vault ID
-
-### <a name="output_project_id"></a> [project\_id](#output\_project\_id)
-
-Description: The Azure Foundry Project ID
-
-### <a name="output_project_management_url"></a> [project\_management\_url](#output\_project\_management\_url)
-
-Description: The management URL for the AI Foundry Project on the Azure AI platform
-
-### <a name="output_project_principal_id"></a> [project\_principal\_id](#output\_project\_principal\_id)
-
-Description: The principal ID of the managed identity assigned to the Azure Foundry Project
-
-### <a name="output_project_url"></a> [project\_url](#output\_project\_url)
-
-Description: The URL to access the AI Foundry Project on the Azure AI platform
-
 ### <a name="output_search_service_id"></a> [search\_service\_id](#output\_search\_service\_id)
 
 Description: The ID of the AI service
@@ -312,17 +212,3 @@ Description: The name of the AI service
 
 Description: The principal ID of the managed identity assigned to the Azure AI Search Service
 <!-- END_TF_DOCS -->
-
-## Contributions
-
-We welcome all kinds of contributions, whether it's reporting bugs, submitting feature requests, or directly contributing to the development. Please read our [Contributing Guidelines](CONTRIBUTING.md) to learn how you can best contribute.
-
-Thank you for your interest and support!
-
-## Copyright and license
-
-<img width=200 alt="Logo" src="https://raw.githubusercontent.com/cloudeteer/cdt-public/main/img/cdt_logo_orig_4c.svg">
-
-© 2024 CLOUDETEER GmbH
-
-This project is licensed under the [MIT License](LICENSE).
