@@ -1,5 +1,5 @@
 module "ai_foundry_core" {
-  source = "cloudeteer/azure-ai-foundry-hub/azurerm//modules/ai-foundry-core"
+  source = "cloudeteer/ai-stack/azurerm//modules/ai-foundry-core"
 
   name                = var.basename
   location            = var.location

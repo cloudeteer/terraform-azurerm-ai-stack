@@ -5,7 +5,7 @@ This example demonstrates the usage of this Terraform module with default settin
 
 ```hcl
 module "ai_foundry_services" {
-  source = "cloudeteer/azure-ai-foundry-hub/azurerm//modules/ai-foundry-services"
+  source = "cloudeteer/ai-stack/azurerm//modules/ai-foundry-services"
 
   name                = var.basename
   location            = var.location
