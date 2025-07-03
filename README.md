@@ -7,8 +7,8 @@
 
 # terraform-azurerm-ai-stack
 
-[![Terraform Registry](https://img.shields.io/badge/Terraform%20Registry-ai-stack-7B42BC?style=for-the-badge&logo=terraform&logoColor=A067DA)](https://registry.terraform.io/modules/cloudeteer/ai-stack/azurerm)
-[![OpenTofu Registry](https://img.shields.io/badge/OpenTofu%20Registry-ai-stack-4B4B77?style=for-the-badge&logo=opentofu)](https://search.opentofu.org/module/cloudeteer/ai-stack/azurerm)
+[![Terraform Registry](https://img.shields.io/badge/Terraform%20Registry-ai--stack-7B42BC?style=for-the-badge&logo=terraform&logoColor=A067DA)](https://registry.terraform.io/modules/cloudeteer/ai-stack/azurerm)
+[![OpenTofu Registry](https://img.shields.io/badge/OpenTofu%20Registry-ai--stack-4B4B77?style=for-the-badge&logo=opentofu)](https://search.opentofu.org/module/cloudeteer/ai-stack/azurerm)
 [![SemVer](https://img.shields.io/badge/SemVer-2.0.0-F77F00?style=for-the-badge)](https://github.com/cloudeteer/terraform-azurerm-ai-stack/releases)
 
 This Terraform module is composed of several submodules, which are combined in the primary module to provide a complete solution. Each submodule can also be deployed independently—see [./modules/](./modules/) for details.
