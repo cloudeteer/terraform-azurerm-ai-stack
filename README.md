@@ -5,11 +5,11 @@
 
 ---
 
-# terraform-module-template
+# terraform-azurerm-azure-ai-foundry-hub
 
-[![SemVer](https://img.shields.io/badge/SemVer-2.0.0-blue.svg)](https://github.com/cloudeteer/terraform-module-template/releases)
-
-Terraform Module Template
+[![Terraform Registry](https://img.shields.io/badge/Terraform%20Registry-launchpad-7B42BC?style=for-the-badge&logo=terraform&logoColor=A067DA)](https://registry.terraform.io/modules/cloudeteer/launchpad/azurerm)
+[![OpenTofu Registry](https://img.shields.io/badge/OpenTofu%20Registry-launchpad-4B4B77?style=for-the-badge&logo=opentofu)](https://search.opentofu.org/module/cloudeteer/launchpad/azurerm)
+[![SemVer](https://img.shields.io/badge/SemVer-2.0.0-F77F00?style=for-the-badge)](https://github.com/cloudeteer/terraform-azurerm-launchpad/releases)
 
 <!-- BEGIN_TF_DOCS -->
 ## Usage
