@@ -115,9 +115,9 @@ variable "resource_group_name" {
 }
 
 variable "search_service_sku" {
-  type = string
+  type        = string
   description = "The SKU which should be used for this Search Service. Possible values include basic, free, standard, standard2, standard3, storage_optimized_l1 and storage_optimized_l2. Changing this forces a new Search Service to be created. Some SKU´s may with some restrictions. See https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service#sku-1"
-  default = "standard"
+  default     = "standard"
 }
 
 variable "sku" {
