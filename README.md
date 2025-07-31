@@ -338,6 +338,14 @@ Type: `bool`
 
 Default: `false`
 
+### <a name="input_search_service_sku"></a> [search\_service\_sku](#input\_search\_service\_sku)
+
+Description: The SKU which should be used for this Search Service. Possible values include basic, free, standard, standard2, standard3, storage\_optimized\_l1 and storage\_optimized\_l2. Changing this forces a new Search Service to be created. Some SKU´s may with some restrictions. See https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/search_service#sku-1
+
+Type: `string`
+
+Default: `"standard"`
+
 ### <a name="input_sku"></a> [sku](#input\_sku)
 
 Description: The sku name of the Azure Analysis Services server to create. Choose from: B1, B2, D1, S0, S1, S2, S3, S4, S8, S9. Some skus are region specific. See https://docs.microsoft.com/en-us/azure/analysis-services/analysis-services-overview#availability-by-region

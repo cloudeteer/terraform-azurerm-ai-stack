@@ -5,7 +5,7 @@ resource "azurerm_search_service" "this" {
 
   local_authentication_enabled = var.local_authentication_enabled
   authentication_failure_mode  = var.local_authentication_enabled ? "http401WithBearerChallenge" : null
-  sku                          = "standard"
+  sku                          = var.search_service_sku
 
   public_network_access_enabled = true
   allowed_ips                   = var.allowed_ips
