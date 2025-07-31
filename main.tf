@@ -32,6 +32,7 @@ module "ai_foundry_services" {
   create_rbac                  = var.create_rbac
   local_authentication_enabled = var.local_authentication_enabled
   models                       = var.models
+  search_service_sku           = var.search_service_sku
   sku                          = var.sku
   storage_account_id           = module.ai_foundry_core.storage_account_id
 }
