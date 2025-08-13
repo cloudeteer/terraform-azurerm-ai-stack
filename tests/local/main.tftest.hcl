@@ -7,8 +7,8 @@ run "should_succeed_with_default_variable_values" {
 
 run "should_fail_with_too_long_basename" {
   command = plan
-  variables{
-    basename= "this-is-a-long-name-with-no-borders"
+  variables {
+    basename = "this-is-a-long-name-with-no-borders"
   }
   expect_failures = [var.basename]
 }
