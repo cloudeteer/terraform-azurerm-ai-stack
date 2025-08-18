@@ -40,7 +40,13 @@ variable "allowed_ips" {
 
 variable "basename" {
   type        = string
-  description = "The basename of all resources deployed by this module"
+  description = "The basename of all resources deployed by this module. Please use only 28 characters or less."
+
+  # 28 characters because "azapi_resource" "search_service_outbound_rule_hub" adds already 3 characters
+  validation {
+    condition     = length(var.basename) < 29
+    error_message = "Your 'basename' is too long, please chose a shoter name."
+  }
 }
 
 variable "create_rbac" {

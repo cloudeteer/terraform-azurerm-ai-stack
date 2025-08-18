@@ -166,7 +166,7 @@ The following input variables are required:
 
 ### <a name="input_basename"></a> [basename](#input\_basename)
 
-Description: The basename of all resources deployed by this module
+Description: The basename of all resources deployed by this module. Please use only 28 characters or less.
 
 Type: `string`
 
