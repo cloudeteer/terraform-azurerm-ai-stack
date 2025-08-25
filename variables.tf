@@ -49,6 +49,80 @@ variable "basename" {
   }
 }
 
+variable "chatbot" {
+  description = <<-DESCRIPTION
+    Configuration options for deploying the chatbot submodule as part of the AI Foundry Hub. This variable allows you to enable or disable chatbot, customize its deployment, specify container images, environment variables, and provide advanced configuration such as custom domains, model selection, and branding.
+
+    Required arguments:
+
+    Argument | Description
+    -- | --
+    `enabled` | Set to `true` to deploy the chatbot submodule. Defaults to `false`.
+
+    Optional arguments:
+
+    Argument | Description
+    -- | --
+    `api` | A `api` object for API configuration, as defined below.
+    `container_registry` | A `container_registry` object specifying the Azure Container Registry to pull container images from.
+    `models` | List of model names to expose in the chatbot frontend. Each model must be deployed via `var.models`.
+    `ui` | A `ui` object for UI configuration, as defined below.
+
+    `api` object arguments:
+
+    Argument | Description
+    -- | --
+    `container_image` | Container image for the chatbot frontend. If omitted, the default image will be used.
+    `envs` | Map of environment variables to inject into the chatbot container application.
+    `custom_domain_name` | Custom subdomain for the chatbot application. If not specified, a default subdomain in the format `<region>.azurecontainerapps.io` will be used.
+
+    `container_registry` object arguments:
+
+    Argument | Description
+    -- | --
+    `server` | Hostname of the Azure Container Registry (the `server` output of an `azurerm_container_registry` resource).
+    `id` | Resource ID of the Azure Container Registry.
+
+    `ui` object arguments:
+
+    Argument | Description
+    -- | --
+    `container_image` | Container image for the chatbot frontend. If omitted, the default image will be used.
+    `envs` | Map of environment variables to inject into the chatbot container application.
+    `custom_domain_name` | Custom subdomain for the chatbot application. If not specified, a default subdomain in the format `<region>.azurecontainerapps.io` will be used.
+  DESCRIPTION
+
+  type = object({
+    enabled = bool
+    models  = optional(list(string))
+
+    api = optional(object({
+      container_image    = optional(string)
+      envs               = optional(map(string), {})
+      custom_domain_name = optional(string)
+    }), {})
+
+    container_registry = optional(object({
+      server = string
+      id     = string
+    }))
+
+    entra_id_auth = optional(object({
+      tenant_id     = string
+      client_id     = string
+      client_secret = string
+    }))
+
+    ui = optional(object({
+      container_image    = optional(string)
+      envs               = optional(map(string), {})
+      custom_domain_name = optional(string)
+    }), {})
+  })
+
+  default = { enabled = false }
+}
+
 variable "create_rbac" {
   type = bool
 
@@ -153,6 +227,17 @@ variable "models" {
 
   default  = []
   nullable = false
+}
+
+variable "names" {
+  description = "Allow overwrite the names of specific resources, instead of using generated names by this module bases on `var.basename`. This can be handy when importing existing resources which name should not change, or when having custom naming convetions this module does not consider."
+
+  type = object({
+    chatbot_container_app_ui  = optional(string)
+    chatbot_container_app_api = optional(string)
+  })
+
+  default = {}
 }
 
 variable "public_network_access" {

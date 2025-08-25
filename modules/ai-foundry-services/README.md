@@ -20,7 +20,7 @@ module "ai_foundry_services" {
 
 The following providers are used by this module:
 
-- <a name="provider_azapi"></a> [azapi](#provider\_azapi) ( >= 2.0)
+- <a name="provider_azapi"></a> [azapi](#provider\_azapi) ( >= 2.5)
 
 - <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (>= 4.14)
 
@@ -200,6 +200,10 @@ Default: `"S0"`
 
 The following outputs are exported:
 
+### <a name="output_ai_service_custom_subdomain_name"></a> [ai\_service\_custom\_subdomain\_name](#output\_ai\_service\_custom\_subdomain\_name)
+
+Description: The AI Search Service subdomain name used for token-based authentication.
+
 ### <a name="output_ai_service_endpoint"></a> [ai\_service\_endpoint](#output\_ai\_service\_endpoint)
 
 Description: The endpoint of the AI service
@@ -207,6 +211,18 @@ Description: The endpoint of the AI service
 ### <a name="output_ai_service_id"></a> [ai\_service\_id](#output\_ai\_service\_id)
 
 Description: The ID of the AI service
+
+### <a name="output_ai_service_primary_access_key"></a> [ai\_service\_primary\_access\_key](#output\_ai\_service\_primary\_access\_key)
+
+Description: A primary access key which can be used to connect to the AI Services Account.
+
+### <a name="output_ai_service_secondary_access_key"></a> [ai\_service\_secondary\_access\_key](#output\_ai\_service\_secondary\_access\_key)
+
+Description: A secondary access key which can be used to connect to the AI Services Account.
+
+### <a name="output_search_service_endpoint"></a> [search\_service\_endpoint](#output\_search\_service\_endpoint)
+
+Description: The name of the AI service
 
 ### <a name="output_search_service_id"></a> [search\_service\_id](#output\_search\_service\_id)
 
@@ -216,7 +232,15 @@ Description: The ID of the AI service
 
 Description: The name of the AI service
 
+### <a name="output_search_service_primary_key"></a> [search\_service\_primary\_key](#output\_search\_service\_primary\_key)
+
+Description: The Primary Key used for Search Service Administration.
+
 ### <a name="output_search_service_principal_id"></a> [search\_service\_principal\_id](#output\_search\_service\_principal\_id)
 
 Description: The principal ID of the managed identity assigned to the Azure AI Search Service
+
+### <a name="output_search_service_secondary_key"></a> [search\_service\_secondary\_key](#output\_search\_service\_secondary\_key)
+
+Description: The Secondary Key used for Search Service Administration.
 <!-- END_TF_DOCS -->

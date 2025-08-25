@@ -1,25 +1,28 @@
 locals {
   model_defaults = [
     {
-      name         = "gpt-4o-mini"
-      format       = "OpenAI"
-      sku_capacity = 10
-      sku_name     = "GlobalStandard"
-      version      = "2024-11-20"
-    },
-    {
-      name         = "gpt-4o"
-      format       = "OpenAI"
-      sku_capacity = 10
-      sku_name     = "GlobalStandard"
-      version      = "2024-11-20"
-    },
-    {
-      name         = "text-embedding-ada-002"
-      format       = "OpenAI"
+      format  = "OpenAI"
+      name    = "gpt-4o"
+      version = "2024-11-20"
+
       sku_capacity = 10
       sku_name     = "Standard"
-      version      = "2"
+    },
+    {
+      format  = "OpenAI"
+      name    = "gpt-4o-mini"
+      version = "2024-07-18"
+
+      sku_capacity = 10
+      sku_name     = "Standard"
+    },
+    {
+      format  = "OpenAI"
+      name    = "text-embedding-ada-002"
+      version = "2"
+
+      sku_capacity = 10
+      sku_name     = "Standard"
     },
   ]
 

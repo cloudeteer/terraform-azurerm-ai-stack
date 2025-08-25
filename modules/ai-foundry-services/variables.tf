@@ -28,6 +28,11 @@ variable "allowed_ips" {
   nullable    = false
 }
 
+variable "basename" {
+  type        = string
+  description = "The basename of all resources deployed by this module"
+}
+
 variable "create_rbac" {
   type = bool
 
@@ -102,11 +107,6 @@ variable "models" {
 
   default  = []
   nullable = false
-}
-
-variable "basename" {
-  type        = string
-  description = "The basename of all resources deployed by this module"
 }
 
 variable "resource_group_name" {

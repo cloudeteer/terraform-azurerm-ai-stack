@@ -107,8 +107,6 @@ The following resources were referenced during the development of this module an
 This example demonstrates the usage of this Terraform module with default settings.
 
 ```hcl
-data "http" "my_current_public_ip" { url = "https://ipv4.icanhazip.com" }
-
 resource "azurerm_resource_group" "example" {
   location = "swedencentral"
   name     = "rg-example-dev-swec-01"
@@ -117,18 +115,32 @@ resource "azurerm_resource_group" "example" {
 module "example" {
   source = "cloudeteer/ai-stack/azurerm"
 
+  # Use the resource group name (without the 'rg-' prefix) as the base name for all resources
   basename            = trimprefix(azurerm_resource_group.example.name, "rg-")
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 
+  # Enable public network access for all resources.
+  # This should only be used in development or non-production environments.
   public_network_access = true
-  allowed_ips           = [chomp(data.http.my_current_public_ip.response_body)]
+  # Optionally restrict access to specific IP addresses by setting allowed_ips.
+  # allowed_ips           = []
 
-  # Enables the creation of role assignments for AI Services to interact via
-  # Entra ID (Managed Identities). Requires the user to have at least the
-  # Owner role on the resource group. If disabled, role assignments must be
-  # created manually. See the 'create_rbac' input variable for details.
-  # create_rbac = true # (default)
+  # Automatically create role assignments for AI services using Entra ID (Managed Identities).
+  # Requires the user to have at least the Owner role on the resource group.
+  # If set to false, you must manually create the necessary role assignments.
+  # See the 'create_rbac' input variable documentation for more details.
+  create_rbac = true # (default)
+
+  # Enable local API key authentication for services.
+  # This is currently required for chatbot integration.
+  local_authentication_enabled = true
+
+  # Deploy the chatbot submodule as part of the AI stack.
+  # For additional configuration options, refer to ./modules/app-chatbot/README.md
+  chatbot = {
+    enabled = true
+  }
 }
 ```
 
@@ -151,6 +163,12 @@ Version:
 ### <a name="module_ai_foundry_services"></a> [ai\_foundry\_services](#module\_ai\_foundry\_services)
 
 Source: ./modules/ai-foundry-services
+
+Version:
+
+### <a name="module_app_chatbot"></a> [app\_chatbot](#module\_app\_chatbot)
+
+Source: ./modules/app-chatbot
 
 Version:
 
@@ -218,6 +236,88 @@ Description: List of IP addresses to allow access to the Azure AI service.
 Type: `list(string)`
 
 Default: `[]`
+
+### <a name="input_chatbot"></a> [chatbot](#input\_chatbot)
+
+Description: Configuration options for deploying the chatbot submodule as part of the AI Foundry Hub. This variable allows you to enable or disable chatbot, customize its deployment, specify container images, environment variables, and provide advanced configuration such as custom domains, model selection, and branding.
+
+Required arguments:
+
+Argument | Description
+-- | --
+`enabled` | Set to `true` to deploy the chatbot submodule. Defaults to `false`.
+
+Optional arguments:
+
+Argument | Description
+-- | --
+`api` | A `api` object for API configuration, as defined below.
+`container_registry` | A `container_registry` object specifying the Azure Container Registry to pull container images from.
+`models` | List of model names to expose in the chatbot frontend. Each model must be deployed via `var.models`.
+`ui` | A `ui` object for UI configuration, as defined below.
+
+`api` object arguments:
+
+Argument | Description
+-- | --
+`container_image` | Container image for the chatbot frontend. If omitted, the default image will be used.
+`envs` | Map of environment variables to inject into the chatbot container application.
+`custom_domain_name` | Custom subdomain for the chatbot application. If not specified, a default subdomain in the format `<region>.azurecontainerapps.io` will be used.
+
+`container_registry` object arguments:
+
+Argument | Description
+-- | --
+`server` | Hostname of the Azure Container Registry (the `server` output of an `azurerm_container_registry` resource).
+`id` | Resource ID of the Azure Container Registry.
+
+`ui` object arguments:
+
+Argument | Description
+-- | --
+`container_image` | Container image for the chatbot frontend. If omitted, the default image will be used.
+`envs` | Map of environment variables to inject into the chatbot container application.
+`custom_domain_name` | Custom subdomain for the chatbot application. If not specified, a default subdomain in the format `<region>.azurecontainerapps.io` will be used.
+
+Type:
+
+```hcl
+object({
+    enabled = bool
+    models  = optional(list(string))
+
+    api = optional(object({
+      container_image    = optional(string)
+      envs               = optional(map(string), {})
+      custom_domain_name = optional(string)
+    }), {})
+
+    container_registry = optional(object({
+      server = string
+      id     = string
+    }))
+
+    entra_id_auth = optional(object({
+      tenant_id     = string
+      client_id     = string
+      client_secret = string
+    }))
+
+    ui = optional(object({
+      container_image    = optional(string)
+      envs               = optional(map(string), {})
+      custom_domain_name = optional(string)
+    }), {})
+  })
+```
+
+Default:
+
+```json
+{
+  "enabled": false
+}
+```
 
 ### <a name="input_create_rbac"></a> [create\_rbac](#input\_create\_rbac)
 
@@ -330,6 +430,21 @@ list(object({
 
 Default: `[]`
 
+### <a name="input_names"></a> [names](#input\_names)
+
+Description: Allow overwrite the names of specific resources, instead of using generated names by this module bases on `var.basename`. This can be handy when importing existing resources which name should not change, or when having custom naming convetions this module does not consider.
+
+Type:
+
+```hcl
+object({
+    chatbot_container_app_ui  = optional(string)
+    chatbot_container_app_api = optional(string)
+  })
+```
+
+Default: `{}`
+
 ### <a name="input_public_network_access"></a> [public\_network\_access](#input\_public\_network\_access)
 
 Description: Allow Public Access on AI Services, Storage Account, Key Vault, etc.
@@ -365,6 +480,22 @@ Description: The endpoint of the AI service
 ### <a name="output_ai_service_id"></a> [ai\_service\_id](#output\_ai\_service\_id)
 
 Description: The ID of the AI service
+
+### <a name="output_chatbot_api_container_app_id"></a> [chatbot\_api\_container\_app\_id](#output\_chatbot\_api\_container\_app\_id)
+
+Description: The Azure Container Application resource ID of the chatbot API
+
+### <a name="output_chatbot_api_principal_id"></a> [chatbot\_api\_principal\_id](#output\_chatbot\_api\_principal\_id)
+
+Description: The principal ID of the managed identity assigned to the Container App running the chatbot frontend application
+
+### <a name="output_chatbot_ui_container_app_id"></a> [chatbot\_ui\_container\_app\_id](#output\_chatbot\_ui\_container\_app\_id)
+
+Description: The Azure Container Application resource ID of the chatbot UI
+
+### <a name="output_chatbot_ui_principal_id"></a> [chatbot\_ui\_principal\_id](#output\_chatbot\_ui\_principal\_id)
+
+Description: The principal ID of the managed identity assigned to the Container App running the chatbot frontend application
 
 ### <a name="output_hub_id"></a> [hub\_id](#output\_hub\_id)
 

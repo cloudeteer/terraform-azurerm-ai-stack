@@ -8,6 +8,26 @@ output "ai_service_id" {
   description = "The ID of the AI service"
 }
 
+output "chatbot_api_container_app_id" {
+  description = "The Azure Container Application resource ID of the chatbot API"
+  value       = one(module.app_chatbot[*].api_container_app_id)
+}
+
+output "chatbot_api_principal_id" {
+  description = "The principal ID of the managed identity assigned to the Container App running the chatbot frontend application"
+  value       = one(module.app_chatbot[*].api_identity.principal_id)
+}
+
+output "chatbot_ui_container_app_id" {
+  description = "The Azure Container Application resource ID of the chatbot UI"
+  value       = one(module.app_chatbot[*].ui_container_app_id)
+}
+
+output "chatbot_ui_principal_id" {
+  description = "The principal ID of the managed identity assigned to the Container App running the chatbot frontend application"
+  value       = one(module.app_chatbot[*].ui_identity.principal_id)
+}
+
 output "hub_id" {
   value       = module.ai_foundry_core.hub_id
   description = "The Azure Foundry Hub ID"
