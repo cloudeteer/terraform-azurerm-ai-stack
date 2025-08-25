@@ -32,7 +32,7 @@ resource "azapi_resource" "ai_services_connection_hub" {
   name      = "aisc-${var.basename}"
   parent_id = var.hub_id
 
-  response_export_values = ["*"]
+  response_export_values = []
 
   body = {
     properties = {
@@ -58,7 +58,7 @@ resource "azapi_resource" "ai_services_outbound_rule_hub" {
   name      = "pe-${azurerm_ai_services.this.name}"
   parent_id = var.hub_id
 
-  response_export_values = ["*"]
+  response_export_values = []
 
   body = {
     properties = {
