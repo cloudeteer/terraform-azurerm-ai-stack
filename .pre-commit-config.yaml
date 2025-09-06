@@ -17,7 +17,7 @@ repos:
         language: system
         types: [terraform]
         entry: bash -c 'for f in $@; do tfsort "$f"; done' --
-        files: ^variables|outputs\.tf$
+        files: (variables|outputs|locals|terraform)(\.[\w,-]+)?\.tf$
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: "v1.99.0"
     hooks:
