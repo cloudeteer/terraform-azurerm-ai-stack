@@ -60,10 +60,10 @@ module "app_chatbot" {
 
     enabled = true
     envs = merge({
-      AZURE_OPENAI_ENDPOINT            = "https://${module.ai_foundry_services.ai_service_custom_subdomain_name}.openai.azure.com/"
-      AZURE_OPENAI_API_KEY             = module.ai_foundry_services.ai_service_primary_access_key
-      AZURE_AI_SEARCH_SERVICE_ENDPOINT = module.ai_foundry_services.search_service_endpoint
-      AZURE_AI_SEARCH_API_KEY          = module.ai_foundry_services.search_service_primary_key
+      AZURE_OPENAI_ENDPOINT = "https://${module.ai_foundry_services.ai_service_custom_subdomain_name}.openai.azure.com/"
+      AZURE_OPENAI_API_KEY  = module.ai_foundry_services.ai_service_primary_access_key
+      AZURE_SEARCH_ENDPOINT = module.ai_foundry_services.search_service_endpoint
+      AZURE_SEARCH_KEY      = module.ai_foundry_services.search_service_primary_key
     }, coalesce(var.chatbot.api.envs, {}))
   })
 
