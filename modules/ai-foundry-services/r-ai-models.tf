@@ -1,51 +1,7 @@
-locals {
-  model_defaults = [
-    {
-      format  = "OpenAI"
-      name    = "gpt-4o"
-      version = "2024-11-20"
-
-      sku_capacity = 10
-      sku_name     = "Standard"
-    },
-    {
-      format  = "OpenAI"
-      name    = "gpt-4o-mini"
-      version = "2024-07-18"
-
-      sku_capacity = 10
-      sku_name     = "Standard"
-    },
-    {
-      format  = "OpenAI"
-      name    = "text-embedding-ada-002"
-      version = "2"
-
-      sku_capacity = 10
-      sku_name     = "Standard"
-    },
-  ]
-
-  models = {
-    for model in var.models : model.name => one(
-      [
-        for default in local.model_defaults : {
-          name            = model.name
-          deployment_name = coalesce(model.deployment_name, model.name)
-          format          = coalesce(model.format, default.format)
-          sku_capacity    = coalesce(model.sku_capacity, default.sku_capacity)
-          sku_name        = coalesce(model.sku_name, default.sku_name)
-          version         = coalesce(model.version, default.version)
-        } if default.name == model.name
-      ]
-    )
-  }
-}
-
 resource "azurerm_cognitive_deployment" "this" {
-  for_each = local.models
+  for_each = { for model in var.models : coalesce(model.deployment_name, model.name) => model }
 
-  name = each.value.deployment_name
+  name = coalesce(each.value.deployment_name, each.value.name)
 
   cognitive_account_id = azurerm_ai_services.this.id
   rai_policy_name      = "Microsoft.DefaultV2"
