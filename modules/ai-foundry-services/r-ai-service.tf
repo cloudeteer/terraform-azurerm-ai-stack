@@ -83,37 +83,37 @@ resource "azurerm_role_assignment" "ai_service_developer" {
   scope                = azurerm_ai_services.this.id
 }
 
-resource "azurerm_role_assignment" "ai_service_developer_user_access_administrator" {
-  count = var.ai_developer_principal_id == null ? 0 : 1
+# resource "azurerm_role_assignment" "ai_service_developer_user_access_administrator" {
+#   count = var.ai_developer_principal_id == null ? 0 : 1
 
-  description          = "This role assignment is needed to deploy web apps from ai.azure.com"
-  principal_id         = var.ai_developer_principal_id
-  role_definition_name = "User Access Administrator"
-  scope                = azurerm_ai_services.this.id
+#   description          = "This role assignment is needed to deploy web apps from ai.azure.com"
+#   principal_id         = var.ai_developer_principal_id
+#   role_definition_name = "User Access Administrator"
+#   scope                = azurerm_ai_services.this.id
 
-  condition_version = "2.0"
-  condition         = <<-CONDITION
-    (
-        (
-          !(ActionMatches{'Microsoft.Authorization/roleAssignments/write'})
-        )
-        OR
-        (
-          @Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {5e0bd9bd-7b93-4f28-af87-19fc36ad61bd}
-        )
-    )
-    AND
-    (
-        (
-          !(ActionMatches{'Microsoft.Authorization/roleAssignments/delete'})
-        )
-        OR
-        (
-          @Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {5e0bd9bd-7b93-4f28-af87-19fc36ad61bd}
-        )
-    )
-  CONDITION
-}
+#   condition_version = "2.0"
+#   condition         = <<-CONDITION
+#     (
+#         (
+#           !(ActionMatches{'Microsoft.Authorization/roleAssignments/write'})
+#         )
+#         OR
+#         (
+#           @Request[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {5e0bd9bd-7b93-4f28-af87-19fc36ad61bd}
+#         )
+#     )
+#     AND
+#     (
+#         (
+#           !(ActionMatches{'Microsoft.Authorization/roleAssignments/delete'})
+#         )
+#         OR
+#         (
+#           @Resource[Microsoft.Authorization/roleAssignments:RoleDefinitionId] ForAnyOfAnyValues:GuidEquals {5e0bd9bd-7b93-4f28-af87-19fc36ad61bd}
+#         )
+#     )
+#   CONDITION
+# }
 
 resource "azurerm_role_assignment" "ai_service_search_service" {
   for_each = var.create_rbac ? toset([
