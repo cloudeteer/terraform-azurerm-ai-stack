@@ -144,7 +144,7 @@ resource "azurerm_container_app" "ui" {
 
   template {
     max_replicas = 1
-    min_replicas = 0
+    min_replicas = 1
 
     container {
       name = "ui"
