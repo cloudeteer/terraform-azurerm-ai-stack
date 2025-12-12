@@ -49,6 +49,7 @@ The following resources are used by this module:
 - [random_string.mongo_cluster_administrator_username](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) (resource)
 - [random_string.suffix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) (resource)
 - [time_static.this](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/static) (resource)
+- [azurerm_subscription.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription) (data source)
 
 ## Required Inputs
 
@@ -115,6 +116,7 @@ object({
     identity             = optional(string) # desc: default uses the identity brought by this module
     password_secret_name = optional(string)
     username             = optional(string)
+    create_rbac          = optional(bool, true)
   })
 ```
 

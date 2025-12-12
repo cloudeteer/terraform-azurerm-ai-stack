@@ -270,6 +270,7 @@ Argument | Description
 -- | --
 `server` | Hostname of the Azure Container Registry (the `server` output of an `azurerm_container_registry` resource).
 `id` | Resource ID of the Azure Container Registry.
+`create_rbac` | Specifies whether to create role assignments that grant the container app's managed identity permissions to pull images from the container registry. Defaults to `true`.
 
 `ui` object arguments:
 
@@ -293,8 +294,9 @@ object({
     }), {})
 
     container_registry = optional(object({
-      server = string
-      id     = string
+      server      = string
+      id          = string
+      create_rbac = optional(bool, true)
     }))
 
     entra_id_auth = optional(object({

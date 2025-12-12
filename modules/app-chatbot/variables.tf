@@ -37,6 +37,7 @@ variable "container_registry" {
     identity             = optional(string) # desc: default uses the identity brought by this module
     password_secret_name = optional(string)
     username             = optional(string)
+    create_rbac          = optional(bool, true)
   })
   description = "Container registry configuration object, including registry ID, server address, and optional authentication details."
   default     = null
