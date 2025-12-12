@@ -78,7 +78,17 @@ output "search_service_name" {
   description = "The name of the AI service"
 }
 
+output "search_service_primary_key" {
+  value       = module.ai_foundry_services.search_service_primary_key
+  description = "A primary access key which can be used to connect to the AI Services Account."
+}
+
 output "search_service_principal_id" {
   value       = module.ai_foundry_services.search_service_principal_id
   description = "The principal ID of the managed identity assigned to the Azure AI Search Service"
+}
+
+output "search_service_secondary_key" {
+  value       = module.ai_foundry_services.search_service_secondary_key
+  description = "A secondary access key which can be used to connect to the AI Services Account."
 }

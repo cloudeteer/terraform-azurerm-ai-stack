@@ -539,9 +539,17 @@ Description: The ID of the AI service
 
 Description: The name of the AI service
 
+### <a name="output_search_service_primary_key"></a> [search\_service\_primary\_key](#output\_search\_service\_primary\_key)
+
+Description: A primary access key which can be used to connect to the AI Services Account.
+
 ### <a name="output_search_service_principal_id"></a> [search\_service\_principal\_id](#output\_search\_service\_principal\_id)
 
 Description: The principal ID of the managed identity assigned to the Azure AI Search Service
+
+### <a name="output_search_service_secondary_key"></a> [search\_service\_secondary\_key](#output\_search\_service\_secondary\_key)
+
+Description: A secondary access key which can be used to connect to the AI Services Account.
 <!-- END_TF_DOCS -->
 
 ## Contributions
